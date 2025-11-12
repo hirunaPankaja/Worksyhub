@@ -32,104 +32,104 @@ const toolCategories = [
   {
     name: 'Calculators',
     description: 'Basic, scientific, and financial calculators for all your needs.',
-    href: '/calculator', // <-- CORRECTED
+    href: '/basic-calculator', // <-- UPDATED
     icon: Calculator,
     color: 'bg-blue-500',
     imageUrl:
       'https://images.unsplash.com/photo-1554224155-8d044b4032ee?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '8 tools',
+    count: '8 tools', // <-- UPDATED
   },
   {
     name: 'Time & Date Tools',
     description:
       'Convert time zones, calculate age, count days, and use date tools.',
-    href: '/time-tools', // <-- CORRECTED
+    href: '/time-zone-converter', // <-- UPDATED
     icon: Timer,
     color: 'bg-green-500',
     imageUrl:
       'https://images.unsplash.com/photo-1533749871411-5e21e14bcc7d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '5 tools',
+    count: '5 tools', // <-- UPDATED
   },
   {
     name: 'Measurement Converters',
     description: 'Convert length, weight, temperature, and various units.',
-    href: '/measurement-converter', // <-- CORRECTED
+    href: '/length-converter', // <-- UPDATED
     icon: Ruler,
     color: 'bg-yellow-500',
     imageUrl:
       'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '6 tools',
+    count: '6 tools', // <-- UPDATED
   },
   {
     name: 'Clock & Timer Tools',
     description:
       'World clock, stopwatch, countdown timer, and alarm tools.',
-    href: '/clock-tools', // <-- CORRECTED
+    href: '/world-clock', // <-- UPDATED
     icon: Clock,
     color: 'bg-sky-500',
     imageUrl:
       'https://images.unsplash.com/photo-1501139083538-0139583c060f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '2 tools',
+    count: '2 tools', // <-- UPDATED
   },
   {
     name: 'Productivity & Utility',
     description:
       'Password generator, text tools, QR codes, and productivity boosters.',
-    href: '/productivity-tools', // <-- CORRECTED
+    href: '/password-generator', // <-- UPDATED
     icon: KeyRound,
     color: 'bg-purple-500',
     imageUrl:
       'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '5 tools',
+    count: '5 tools', // <-- UPDATED
   },
   {
     name: 'Design & Color Tools',
     description:
       'Color pickers, gradient generators, and design utilities for creators.',
-    href: '/design-tools', // <-- CORRECTED
+    href: '/color-picker', // <-- UPDATED
     icon: Palette,
     color: 'bg-pink-500',
     imageUrl:
       'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '3 tools',
+    count: '3 tools', // <-- UPDATED
   },
   {
     name: 'Text & Coding Utilities',
     description:
       'JSON formatter, Base64 encoder, text encryption, and developer tools.',
-    href: '/text-tools', // <-- CORRECTED
+    href: '/json-formatter', // <-- UPDATED
     icon: FileCode,
     color: 'bg-gray-500',
     imageUrl:
       'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '4 tools',
+    count: '4 tools', // <-- UPDATED
   },
   {
     name: 'Lifestyle & Health',
     description:
       'Sleep calculator, health trackers, and personal wellness utilities.',
-    href: '/lifestyle-tools', // <-- CORRECTED
+    href: '/sleep-calculator', // <-- UPDATED
     icon: HeartPulse,
     color: 'bg-red-500',
     imageUrl:
       'https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '2 tools',
+    count: '2 tools', // <-- UPDATED
   },
   {
     name: 'File & Media Tools',
     description:
       'Image resizer, PDF tools, converters, and media processing utilities.',
-    href: '/file-tools', // <-- CORRECTED
+    href: '/image-resizer', // <-- UPDATED
     icon: File,
     color: 'bg-indigo-500',
     imageUrl:
       'https://images.unsplash.com/photo-1563206767-5b18f218e8de?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '4 tools',
+    count: '4 tools', // <-- UPDATED
   },
   {
     name: 'Miscellaneous & Fun',
     description: 'Random generators, decision tools, and entertaining utilities.',
-    href: '/misc-tools', // <-- CORRECTED
+    href: '/coin-flip-dice-roll', // <-- UPDATED
     icon: Sparkles,
     color: 'bg-orange-500',
     imageUrl:
@@ -183,7 +183,6 @@ const featuredTools = [
     usage: 'Used 200+ times daily',
   },
 ];
-
 // ... (rest of the file is identical) ...
 const advantages = [
   {
