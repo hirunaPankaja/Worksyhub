@@ -3,7 +3,23 @@
 
 import { useState } from 'react';
 import { Disc, BookOpen, Plus, Trash2, HelpCircle } from 'lucide-react';
-import { Wheel } from 'react-custom-roulette';
+import dynamic from 'next/dynamic'; // <-- 1. IMPORT DYNAMIC
+
+// --- 2. REMOVE the old import: import { Wheel } from 'react-custom-roulette'; ---
+
+// --- 3. CREATE a dynamic component that ONLY runs on the client ---
+const Wheel = dynamic(
+  () => import('react-custom-roulette').then((mod) => mod.Wheel),
+  {
+    ssr: false, // This is the magic line that fixes the build error
+    loading: () => (
+      <div className="w-full h-80 flex items-center justify-center bg-muted rounded-full">
+        <p>Loading wheel...</p>
+      </div>
+    ),
+  }
+);
+// --- END OF CHANGES ---
 
 const defaultWheelData = [
   { option: 'Pizza', style: { backgroundColor: '#FF5733' } },
@@ -88,7 +104,7 @@ export default function DecisionWheelPage() {
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="flex flex-col items-center">
-            {/* The Wheel component needs a client-side wrapper if it throws errors */}
+            {/* This <Wheel> component is now the dynamic one */}
             <Wheel
               mustStartSpinning={mustSpin}
               prizeNumber={prizeNumber}
