@@ -27,22 +27,23 @@ import {
   Moon,
 } from 'lucide-react';
 
+// === UPDATED: toolCategories ARRAY ===
 const toolCategories = [
   {
     name: 'Calculators',
     description: 'Basic, scientific, and financial calculators for all your needs.',
-    href: '/calculator',
+    href: '/calculator', // <-- CORRECTED
     icon: Calculator,
     color: 'bg-blue-500',
     imageUrl:
       'https://images.unsplash.com/photo-1554224155-8d044b4032ee?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '3 tools',
+    count: '8 tools',
   },
   {
     name: 'Time & Date Tools',
     description:
       'Convert time zones, calculate age, count days, and use date tools.',
-    href: '/time-tools',
+    href: '/time-tools', // <-- CORRECTED
     icon: Timer,
     color: 'bg-green-500',
     imageUrl:
@@ -52,136 +53,138 @@ const toolCategories = [
   {
     name: 'Measurement Converters',
     description: 'Convert length, weight, temperature, and various units.',
-    href: '/measurement-converter',
+    href: '/measurement-converter', // <-- CORRECTED
     icon: Ruler,
     color: 'bg-yellow-500',
     imageUrl:
       'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '8 tools',
+    count: '6 tools',
   },
   {
     name: 'Clock & Timer Tools',
     description:
       'World clock, stopwatch, countdown timer, and alarm tools.',
-    href: '/clock-tools', // <-- Corrected path
+    href: '/clock-tools', // <-- CORRECTED
     icon: Clock,
     color: 'bg-sky-500',
     imageUrl:
       'https://images.unsplash.com/photo-1501139083538-0139583c060f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '4 tools',
+    count: '2 tools',
   },
   {
     name: 'Productivity & Utility',
     description:
       'Password generator, text tools, QR codes, and productivity boosters.',
-    href: '/productivity-tools', // <-- Corrected path
+    href: '/productivity-tools', // <-- CORRECTED
     icon: KeyRound,
     color: 'bg-purple-500',
     imageUrl:
       'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '12 tools',
+    count: '5 tools',
   },
   {
     name: 'Design & Color Tools',
     description:
       'Color pickers, gradient generators, and design utilities for creators.',
-    href: '/design-tools',
+    href: '/design-tools', // <-- CORRECTED
     icon: Palette,
     color: 'bg-pink-500',
     imageUrl:
       'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '6 tools',
+    count: '3 tools',
   },
   {
     name: 'Text & Coding Utilities',
     description:
       'JSON formatter, Base64 encoder, text encryption, and developer tools.',
-    href: '/text-tools',
+    href: '/text-tools', // <-- CORRECTED
     icon: FileCode,
     color: 'bg-gray-500',
     imageUrl:
       'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '9 tools',
+    count: '4 tools',
   },
   {
     name: 'Lifestyle & Health',
     description:
       'Sleep calculator, health trackers, and personal wellness utilities.',
-    href: '/lifestyle-tools',
+    href: '/lifestyle-tools', // <-- CORRECTED
     icon: HeartPulse,
     color: 'bg-red-500',
     imageUrl:
       'https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '4 tools',
+    count: '2 tools',
   },
   {
     name: 'File & Media Tools',
     description:
       'Image resizer, PDF tools, converters, and media processing utilities.',
-    href: '/file-tools',
+    href: '/file-tools', // <-- CORRECTED
     icon: File,
     color: 'bg-indigo-500',
     imageUrl:
       'https://images.unsplash.com/photo-1563206767-5b18f218e8de?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '7 tools',
+    count: '4 tools',
   },
   {
     name: 'Miscellaneous & Fun',
     description: 'Random generators, decision tools, and entertaining utilities.',
-    href: '/misc-tools',
+    href: '/misc-tools', // <-- CORRECTED
     icon: Sparkles,
     color: 'bg-orange-500',
     imageUrl:
       'https://images.unsplash.com/photo-1535223289827-42f1e9919769?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80',
-    count: '6 tools', // Updated count to include new tools
+    count: '6 tools',
   },
 ];
 
+// === UPDATED: featuredTools ARRAY ===
 const featuredTools = [
   {
     name: 'Random Password Generator',
     description: 'Create secure, customizable passwords instantly',
-    href: '/productivity-tools?tab=password', // <-- Corrected Link
+    href: '/password-generator', // <-- UPDATED
     icon: KeyRound,
     usage: 'Used 500+ times daily',
   },
   {
     name: 'QR Code Generator',
     description: 'Generate QR codes for URLs, text, and contact info',
-    href: '/productivity-tools?tab=qr', // <-- Corrected Link
+    href: '/qr-code-generator', // <-- UPDATED
     icon: QrCode,
     usage: 'Used 300+ times daily',
   },
   {
     name: 'JSON Formatter',
     description: 'Beautify, validate, and format JSON data easily',
-    href: '/text-tools?tab=json', // <-- Corrected Link
+    href: '/json-formatter', // <-- UPDATED
     icon: FileJson,
     usage: 'Used 400+ times daily',
   },
   {
     name: 'Image Resizer',
     description: 'Resize and compress images without quality loss',
-    href: '/file-tools?tab=resize', // <-- Corrected Link
+    href: '/image-resizer', // <-- UPDATED
     icon: Crop,
     usage: 'Used 250+ times daily',
   },
   {
-    name: 'Color Picker & Converter',
+    name: 'Color Picker',
     description: 'Pick colors and convert between HEX, RGB, HSL formats',
-    href: '/design-tools?tab=picker', // <-- Corrected Link
+    href: '/color-picker', // <-- UPDATED
     icon: Palette,
     usage: 'Used 350+ times daily',
   },
   {
     name: 'Sleep Calculator',
     description: 'Calculate optimal sleep cycles and wake-up times',
-    href: '/lifestyle-tools?tab=sleep', // <-- Corrected Link
+    href: '/sleep-calculator', // <-- UPDATED
     icon: Moon,
     usage: 'Used 200+ times daily',
   },
 ];
 
+// ... (rest of the file is identical) ...
 const advantages = [
   {
     icon: Shield,
@@ -347,6 +350,7 @@ export default function HomePage() {
                       src={tool.imageUrl}
                       alt={tool.name}
                       fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover transition-transform duration-300 group-hover:scale-110"
                       onError={(e) => {
                         // On error, hide the image and show the fallback
@@ -406,6 +410,7 @@ export default function HomePage() {
                 src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80"
                 alt="Choose your tool from dashboard"
                 fill
+                sizes="(max-width: 768px) 100vw, 33vw"
                 className="object-cover"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
@@ -432,6 +437,7 @@ export default function HomePage() {
                 src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80"
                 alt="Input your data securely"
                 fill
+                sizes="(max-width: 768px) 100vw, 33vw"
                 className="object-cover"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
@@ -458,6 +464,7 @@ export default function HomePage() {
                 src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80"
                 alt="Get instant results"
                 fill
+                sizes="(max-width: 768px) 100vw, 33vw"
                 className="object-cover"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
@@ -470,7 +477,7 @@ export default function HomePage() {
                 3
               </div>
             </div>
-            <h3 className="text-xl font-semibold text-foreground">
+            <h3 className="text-xl font-bold text-foreground">
               Get Instant Results
             </h3>
             <p className="mt-3 text-muted-foreground">
