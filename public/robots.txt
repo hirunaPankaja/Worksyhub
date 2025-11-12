@@ -1,0 +1,7 @@
+# public/robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://worksyhub.online/sitemap.xml

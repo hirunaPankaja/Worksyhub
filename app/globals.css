@@ -1,26 +1,453 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 0 0% 100%;
+  --foreground: 0 0% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 3.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 3.9%;
+  --primary: 0 0% 9%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 0 0% 96.1%;
+  --secondary-foreground: 0 0% 9%;
+  --muted: 0 0% 96.1%;
+  --muted-foreground: 0 0% 45.1%;
+  --accent: 0 0% 96.1%;
+  --accent-foreground: 0 0% 9%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 89.8%;
+  --input: 0 0% 89.8%;
+  --ring: 0 0% 3.9%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 0 0% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 9%;
+  --secondary: 0 0% 14.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 14.9%;
+  --muted-foreground: 0 0% 63.9%;
+  --accent: 0 0% 14.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 14.9%;
+  --input: 0 0% 14.9%;
+  --ring: 0 0% 83.1%;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Smooth transitions for theme changes */
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+/* --- Tool Modal Styles --- */
+.tool-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  backdrop-filter: blur(4px);
+}
+
+.tool-modal {
+  background-color: var(--card); /* Uses your existing CSS variables */
+  color: var(--card-foreground);
+  padding: 2rem;
+  border-radius: 0.75rem; /* 12px */
+  border: 1px solid var(--border);
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem; /* 24px */
+}
+
+/* --- Coin Flip Animation --- */
+.coin {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+  background-color: #f7d046; /* Gold */
+  border: 4px solid #dbaa0f;
+  color: #a8860c;
+}
+
+.coin.flipping {
+  animation: flip 1s ease-out;
+}
+
+@keyframes flip {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(1800deg); /* 5 full spins */
   }
 }
 
-body {
-  background: var(--background);
+/* --- Dice Roll Animation --- */
+.dice {
+  width: 120px;
+  height: 120px;
+  border-radius: 0.75rem; /* 12px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem; /* 80px */
+  font-weight: bold;
+  transition: transform 0.5s;
+  background-color: #ffffff;
+  border: 4px solid #e0e0e0;
+  color: #333333;
+}
+
+.dice.rolling {
+  animation: roll 0.5s ease-in-out;
+}
+
+@keyframes roll {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(15deg) scale(0.9) translate(5px, 5px); }
+  50% { transform: rotate(-10deg) scale(1.1) translate(-5px, -5px); }
+  75% { transform: rotate(10deg) scale(0.95); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+/* --- CSS for react-image-crop --- */
+.ReactCrop {
+  position: relative;
+  display: flex;
+  cursor: crosshair;
+  overflow: hidden;
+  max-width: 100%;
+}
+.ReactCrop:focus {
+  outline: none;
+}
+.ReactCrop--disabled {
+  cursor: not-allowed;
+}
+.ReactCrop__image {
+  display: block;
+  max-width: 100%;
+  max-height: 80vh; /* Prevents image from being too tall */
+  touch-action: manipulate;
+}
+.ReactCrop__crop-selection {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateZ(0);
+  box-shadow: 0 0 0 9999em rgba(0, 0, 0, 0.5);
+  border: 2px dashed rgba(255, 255, 255, 0.7);
+  border-radius: 0.75rem; /* --- YOUR ROUNDED CORNERS --- */
+  box-sizing: border-box;
+}
+.ReactCrop--circular-crop .ReactCrop__crop-selection {
+  border-radius: 50%;
+  box-shadow: 0 0 0 9999em rgba(0, 0, 0, 0.5);
+}
+.ReactCrop__rule-of-thirds-horizontal::before,
+.ReactCrop__rule-of-thirds-horizontal::after,
+.ReactCrop__rule-of-thirds-vertical::before,
+.ReactCrop__rule-of-thirds-vertical::after {
+  content: '';
+  display: block;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+.ReactCrop__rule-of-thirds-horizontal {
+  top: 33.33%;
+  bottom: 33.33%;
+  left: 0;
+  right: 0;
+}
+.ReactCrop__rule-of-thirds-vertical {
+  top: 0;
+  bottom: 0;
+  left: 33.33%;
+  right: 33.33%;
+}
+.ReactCrop__rule-of-thirds-horizontal::before,
+.ReactCrop__rule-of-thirds-horizontal::after {
+  height: 1px;
+  width: 100%;
+}
+.ReactCrop__rule-of-thirds-horizontal::before { top: 0; }
+.ReactCrop__rule-of-thirds-horizontal::after { bottom: 0; }
+.ReactCrop__rule-of-thirds-vertical::before,
+.ReactCrop__rule-of-thirds-vertical::after {
+  height: 100%;
+  width: 1px;
+}
+.ReactCrop__rule-of-thirds-vertical::before { left: 0; }
+.ReactCrop__rule-of-thirds-vertical::after { right: 0; }
+.ReactCrop__drag-handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  outline: 1px solid transparent;
+}
+.ReactCrop__drag-handle.ord-n {
+  top: 0;
+  left: 50%;
+  margin-top: -5px;
+  margin-left: -5px;
+  cursor: n-resize;
+}
+.ReactCrop__drag-handle.ord-s {
+  bottom: 0;
+  left: 50%;
+  margin-bottom: -5px;
+  margin-left: -5px;
+  cursor: s-resize;
+}
+.ReactCrop__drag-handle.ord-e {
+  top: 50%;
+  right: 0;
+  margin-top: -5px;
+  margin-right: -5px;
+  cursor: e-resize;
+}
+.ReactCrop__drag-handle.ord-w {
+  top: 50%;
+  left: 0;
+  margin-top: -5px;
+  margin-left: -5px;
+  cursor: w-resize;
+}
+.ReactCrop__drag-handle.ord-nw {
+  top: 0;
+  left: 0;
+  margin-top: -5px;
+  margin-left: -5px;
+  cursor: nw-resize;
+}
+.ReactCrop__drag-handle.ord-ne {
+  top: 0;
+  right: 0;
+  margin-top: -5px;
+  margin-right: -5px;
+  cursor: ne-resize;
+}
+.ReactCrop__drag-handle.ord-sw {
+  bottom: 0;
+  left: 0;
+  margin-bottom: -5px;
+  margin-left: -5px;
+  cursor: sw-resize;
+}
+.ReactCrop__drag-handle.ord-se {
+  bottom: 0;
+  right: 0;
+  margin-bottom: -5px;
+  margin-right: -5px;
+  cursor: se-resize;
+}
+/* --- Tool Modal Styles (You might have this already) --- */
+.tool-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.tool-modal {
+  background-color: var(--card);
+  color: var(--card-foreground);
+  padding: 2rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+}
+.tool-modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+.tool-modal-close:hover { color: var(--foreground); }
+
+/* --- Coin Flip Animation (You might have this already) --- */
+.coin {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+  background-color: #f7d046;
+  border: 4px solid #dbaa0f;
+  color: #a8860c;
+}
+.coin.flipping { animation: flip 1s ease-out; }
+@keyframes flip {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(1800deg); }
+}
+
+/* --- Dice Roll Animation (You might have this already) --- */
+.dice {
+  width: 120px;
+  height: 120px;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  font-weight: bold;
+  transition: transform 0.5s;
+  background-color: #ffffff;
+  border: 4px solid #e0e0e0;
+  color: #333333;
+}
+.dice.rolling { animation: roll 0.5s ease-in-out; }
+@keyframes roll {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(15deg) scale(0.9) translate(5px, 5px); }
+  50% { transform: rotate(-10deg) scale(1.1) translate(-5px, -5px); }
+  75% { transform: rotate(10deg) scale(0.95); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+/* (No styles needed for Magic 8-Ball as it's in the old file) */
+
+/* --- NEW: Rock Paper Scissors Styles --- */
+.rps-arena {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1rem;
+  min-height: 150px;
+}
+.rps-hand {
+  --hand-color: var(--foreground);
+  font-size: 4rem;
+  color: var(--hand-color);
+  transform: scaleX(-1); /* Flip player hand */
+}
+.rps-hand.computer {
+  transform: scaleX(1); /* Computer hand is normal */
+}
+.rps-hand.rock {
+  transform: scaleX(-1) rotate(90deg);
+}
+.rps-hand.computer.rock {
+  transform: rotate(90deg);
+}
+.rps-hand.shaking {
+  animation: rps-shake 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+.rps-choice-btn {
+  background-color: var(--muted);
+  border: 2px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.rps-choice-btn:hover {
+  border-color: var(--primary);
+  background-color: var(--primary-foreground);
+}
+.rps-choice-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@keyframes rps-shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+/* --- NEW: Quote Generator Styles --- */
+.quote-box {
+  background-color: var(--muted);
+  border-left: 4px solid var(--primary);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+}
+.quote-text {
+  font-size: 1.25rem;
+  font-style: italic;
+  line-height: 1.6;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+.quote-author {
+  margin-top: 1rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-align: right;
 }
