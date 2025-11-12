@@ -54,7 +54,9 @@ export default function PDFMergerPage() {
       }
 
       const mergedPdfBytes = await mergedPdf.save();
-      const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
+      // ✅ Fix: Create a new Uint8Array to ensure proper typing for Blob (copies data, but satisfies TS)
+      const pdfBytes = new Uint8Array(mergedPdfBytes);
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       setMergedPdfUrl(url);
     } catch (error) {
