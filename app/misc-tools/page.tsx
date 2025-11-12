@@ -4,6 +4,8 @@
 // --- NEW IMPORTS ---
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+// --- ADDED DYNAMIC ---
+import dynamic from 'next/dynamic';
 // --- END NEW IMPORTS ---
 
 import {
@@ -23,7 +25,22 @@ import {
   Clipboard,
   Check,
 } from 'lucide-react';
-import { Wheel } from 'react-custom-roulette';
+// --- REMOVED: import { Wheel } from 'react-custom-roulette'; ---
+
+// --- NEW: Dynamically import Wheel to run on client-side only ---
+const Wheel = dynamic(
+  () => import('react-custom-roulette').then((mod) => mod.Wheel),
+  {
+    ssr: false, // This is the line that fixes the build error
+    loading: () => (
+      <div className="w-full h-80 flex items-center justify-center bg-muted rounded-full">
+        <p>Loading wheel...</p>
+      </div>
+    ),
+  }
+);
+// --- END OF FIX ---
+
 
 // --- Data for New Tools ---
 
@@ -735,7 +752,7 @@ function MiscToolsPage() { // Renamed from default export
                           >
                             {line.startsWith('**') ? (
                               <strong>{line.replace(/\*\*/g, '')}</strong>
-                            ) : line.startsWith('  -') ? (
+                            ) : line.trim().startsWith('-') ? (
                               <span className="ml-4">{line}</span>
                             ) : line === '' ? (
                               <br />
@@ -872,3 +889,4 @@ function MiscToolsPage() { // Renamed from default export
     </div>
   );
 }
+
