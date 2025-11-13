@@ -16,36 +16,41 @@ export const metadata: Metadata = {
     default: 'WorksyHub - Free Online Converters, Calculators & Simple Tools',
   },
   description:
-    'WorksyHub offers a free collection of simple online tools including time converters, measurement converters, calculators, productivity utilities, design tools, text utilities, and more.',
+    'WorksyHub offers a free collection of online tools — converters, calculators, productivity utilities, design tools, and more.',
   keywords: [
+    'online converter',
+    'pdf tools',
     'time converter',
     'measurement converter',
-    'online calculator',
-    'free tools',
-    'online utilities',
-    'worksyhub',
-    'unit converter',
-    'password generator',
-    'qr code generator',
-    'color picker',
-    'json formatter',
-    'image tools',
+    'calculator',
     'productivity tools',
+    'design utilities',
+    'worksyhub',
+    'free tools online',
   ],
   openGraph: {
     title: 'WorksyHub - Free Online Tools',
     description:
-      'Use WorksyHub for free online converters, calculators, productivity tools, design utilities, and more.',
+      'Free online converters, calculators, text utilities, and productivity tools at WorksyHub.',
     url: 'https://worksyhub.online',
     siteName: 'WorksyHub',
     locale: 'en_US',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'WorksyHub - Free Online Tools',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'WorksyHub - Free Online Tools',
     description:
-      'Free simple converters, calculators, productivity tools & utilities at WorksyHub.',
+      'Free converters, calculators, text utilities, and design tools.',
+    images: ['/og-image.png'],
   },
   metadataBase: new URL('https://worksyhub.online'),
 };
@@ -61,7 +66,7 @@ export default function RootLayout({
     name: 'WorksyHub',
     url: 'https://worksyhub.online',
     description:
-      'WorksyHub provides free simple online tools like converters, calculators, productivity utilities, design tools, and text utilities.',
+      'WorksyHub provides free, simple online tools for productivity, conversions, and calculations.',
     potentialAction: {
       '@type': 'SearchAction',
       target: 'https://worksyhub.online/search?q={search_term_string}',
@@ -72,18 +77,22 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* JSON-LD Structured Data for SEO */}
+        {/* ✅ Structured Data for SEO */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        
-        {/* --- PWA Manifest Link (NEW) --- */}
+
+        {/* ✅ Favicon Setup for Google Search */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        <meta name="theme-color" content="#ffffff" />
+
+        {/* ✅ Manifest for PWA */}
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#000000" />
-        {/* --- End PWA Links --- */}
-        
       </head>
+
       <body
         className={`${inter.variable} font-sans antialiased flex flex-col min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-50`}
       >
@@ -93,20 +102,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* Header Section */}
           <Header />
-
-          {/* Main Content Area with balanced padding */}
-          <main className="mx-auto w-full max-w-7xl flex-grow px-2 sm:px-4 md:px-6 py-8 md:py-12">
+          <main className="mx-auto w-full max-w-7xl flex-grow px-3 sm:px-5 md:px-8 py-8 md:py-12">
             {children}
-
-            {/* Ad Banner Placement */}
             <div className="mt-8 md:mt-12">
               <AdBanner />
             </div>
           </main>
-
-          {/* Footer Section */}
           <Footer />
         </ThemeProvider>
       </body>
