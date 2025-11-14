@@ -43,7 +43,7 @@ const toolCategories = [
     name: 'Time & Date Tools',
     description:
       'Convert time zones, calculate age, count days, and use date tools.',
-    href: '/time-zone-converter', // <-- UPDATED
+    href: '/time-converter', // <-- UPDATED
     icon: Timer,
     color: 'bg-green-500',
     imageUrl:
