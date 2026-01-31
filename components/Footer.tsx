@@ -1,170 +1,82 @@
-// src/components/Footer.tsx
+'use client';
+
 import Link from 'next/link';
-import { Mail } from 'lucide-react';
+import { Github, Twitter, Mail } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
-  return (
-    <footer className="w-full border-t bg-background mt-auto">
-      <div className="container mx-auto max-w-7xl px-6 py-12">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-8">
-          {/* Brand Section */}
-          <div className="col-span-1 md:col-span-5">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-3 mb-4 group"
-            >
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
-                <span className="text-white font-bold text-xl">W</span>
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                WorksyHub
-              </span>
-            </Link>
-            {/* --- CONTENT UPDATE: Brand Description --- */}
-            <p className="text-muted-foreground leading-relaxed max-w-md mb-6">
-              Your all-in-one productivity hub. Free online tools for
-              conversions, calculations, and more. Fast, secure, and always free.
-            </p>
+  const footerLinks = {
+    Company: [
+      { name: 'About Us', href: '/about' },
+      { name: 'Privacy Policy', href: '/privacy-policy' },
+      { name: 'Terms of Service', href: '/terms-of-service' },
+      { name: 'Contact', href: '/contact' },
+    ],
+    Tools: [
+      { name: 'Calculators', href: '/calculators' },
+      { name: 'Converters', href: '/converters' },
+      { name: 'Generators', href: '/generators' },
+      { name: 'Developers', href: '/developers' },
+    ],
+    Trending: [
+      { name: 'BMI Calculator', href: '/bmi-calculator' },
+      { name: 'Youtube Thumbnail', href: '/youtube-thumbnail-downloader' },
+      { name: 'QR Code Generator', href: '/qr-code-generator' },
+      { name: 'Password Gen', href: '/password-generator' },
+    ]
+  };
 
-            {/* Social Links */}
-            <div className="flex gap-3">
-              <a
-                href="mailto:contact@worksyhub.com"
-                className="w-10 h-10 rounded-lg bg-muted hover:bg-blue-100 dark:hover:bg-blue-900/30
-                           flex items-center justify-center text-muted-foreground hover:text-blue-600
-                           transition-all duration-300 hover:scale-110"
-                aria-label="Email"
-              >
+  return (
+    <footer className="border-t border-border bg-muted/30 relative overflow-hidden">
+      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
+
+      <div className="container mx-auto px-4 py-12 md:py-16 max-w-7xl relative z-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+          <div className="col-span-2 lg:col-span-2 space-y-4">
+            <Link href="/" className="flex items-center gap-2">
+              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary text-primary-foreground font-bold">W</div>
+              <span className="font-bold text-xl">WorksyHub</span>
+            </Link>
+            <p className="text-muted-foreground text-sm max-w-sm leading-relaxed">
+              WorksyHub is a collection of free, privacy-focused online tools for developers, designers, and everyday users.
+              No ads, no tracking, just utility.
+            </p>
+            <div className="flex items-center gap-4">
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Github className="w-5 h-5" />
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Twitter className="w-5 h-5" />
+              </a>
+              <a href="mailto:hello@worksyhub.online" className="text-muted-foreground hover:text-foreground transition-colors">
                 <Mail className="w-5 h-5" />
               </a>
             </div>
           </div>
 
-          {/* --- CONTENT UPDATE: Tools Section --- */}
-          <div className="col-span-1 md:col-span-2">
-            <h3 className="font-bold text-foreground mb-4 text-lg">Tools</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/time-converter"
-                  className="text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center group"
-                >
-                  <span className="group-hover:translate-x-1 transition-transform">
-                    Time Converter
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/measurement-converter"
-                  className="text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center group"
-                >
-                  <span className="group-hover:translate-x-1 transition-transform">
-                    Measurement Converter
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/calculator"
-                  className="text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center group"
-                >
-                  <span className="group-hover:translate-x-1 transition-transform">
-                    Calculator
-                  </span>
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* --- CONTENT UPDATE: Resources Section --- */}
-          <div className="col-span-1 md:col-span-2">
-            <h3 className="font-bold text-foreground mb-4 text-lg">
-              Resources
-            </h3>
-            <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/time-converter" // Link to the tool page itself
-                  className="text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center group"
-                >
-                  <span className="group-hover:translate-x-1 transition-transform">
-                    How to Convert Time
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/measurement-converter" // Link to the tool page
-                  className="text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center group"
-                >
-                  <span className="group-hover:translate-x-1 transition-transform">
-                    Metric vs. Imperial
-                  </span>
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* --- CONTENT UPDATE: Company Section (Removed 404s) --- */}
-          <div className="col-span-1 md:col-span-3">
-            <h3 className="font-bold text-foreground mb-4 text-lg">Company</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/about"
-                  className="text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center group"
-                >
-                  <span className="group-hover:translate-x-1 transition-transform">
-                    About Us
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/privacy-policy"
-                  className="text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center group"
-                >
-                  <span className="group-hover:translate-x-1 transition-transform">
-                    Privacy Policy
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/terms-of-service"
-                  className="text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center group"
-                >
-                  <span className="group-hover:translate-x-1 transition-transform">
-                    Terms of Service
-                  </span>
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {Object.entries(footerLinks).map(([category, links]) => (
+            <div key={category} className="space-y-4">
+              <h4 className="font-semibold text-foreground">{category}</h4>
+              <ul className="space-y-2 text-sm">
+                {links.map((link) => (
+                  <li key={link.name}>
+                    <Link href={link.href} className="text-muted-foreground hover:text-primary transition-colors">
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* --- CONTENT UPDATE: Bottom Bar (Removed Sitemap) --- */}
-        <div className="pt-8 border-t flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-muted-foreground text-sm">
-            © {currentYear} WorksyHub. All rights reserved.
-          </p>
-          <div className="flex items-center gap-6 text-sm text-muted-foreground">
-            <Link
-              href="/privacy-policy"
-              className="hover:text-blue-600 transition-colors"
-            >
-              Privacy
-            </Link>
-            <Link
-              href="/terms-of-service"
-              className="hover:text-blue-600 transition-colors"
-            >
-              Terms
-            </Link>
+        <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+          <p>© {currentYear} WorksyHub. All rights reserved.</p>
+          <div className="flex items-center gap-6">
+            <Link href="/privacy-policy" className="hover:text-foreground">Privacy</Link>
+            <Link href="/terms-of-service" className="hover:text-foreground">Terms</Link>
+            <Link href="/sitemap.xml" className="hover:text-foreground">Sitemap</Link>
           </div>
         </div>
       </div>

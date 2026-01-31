@@ -1,1043 +1,401 @@
 'use client';
 
+import { SetStateAction, useState } from 'react';
 import Link from 'next/link';
-import { motion, Transition } from 'framer-motion';
-import {
-  ArrowRight,
-  CheckCircle,
-  Zap,
-  Calculator,
-  Shield,
-  Users,
-  Timer,
-  Ruler,
-  Clock,
-  KeyRound,
-  Palette,
-  FileCode,
-  HeartPulse,
-  File,
-  Sparkles,
-  QrCode,
-  FileJson,
-  Crop,
-  Moon,
-  X,
-  Sigma,
-  Percent,
-  Heart,
-  DollarSign,
-  Tag,
-  GraduationCap,
-  Globe,
-  Calendar,
-  Hash,
-  Weight,
-  Thermometer,
-  Square,
-  Gauge,
-  Droplet,
-  Barcode,
-  CaseSensitive,
-  ListOrdered,
-  Layers,
-  Pipette,
-  Code,
-  Pilcrow,
-  Smile,
-  Coins,
-  Dice6,
-  Disc,
-  HelpCircle,
-  Hand,
-  Quote,
-  FileImage,
-  FileText,
-  ExternalLink,
-  MessageCircle,
-  Search,
-  Settings,
-  Cpu,
-} from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Search, Calculator, Heart, Clock, Zap, Shield, Users, TrendingUp, Star, ArrowRight, Ruler, Lock, Image, QrCode, FileText, Timer, Globe, Percent, Wallet, Calendar, Baby } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { useFavorites } from '@/components/features/FavoritesProvider';
+import { useHistory } from '@/components/features/HistoryTracker';
 
-type ToolLink = {
-  name: string;
-  href: string;
-  icon: React.ElementType;
-  description: string;
-  subFeatures?: string[];
-};
-
-type ToolCategory = {
-  id: string;
-  name: string;
-  description: string;
-  icon: React.ElementType;
-  color: string;
-  gradient: string;
-  count: string;
-  tools: ToolLink[];
-};
-
-const toolCategories: ToolCategory[] = [
+// HIGH-TRAFFIC TOOLS ONLY - Optimized for SEO
+const allTools = [
   {
-    id: 'calculators',
-    name: 'Calculators',
-    description: 'Basic, scientific, and financial calculators with advanced sub-features for precise computations.',
+    name: 'BMI Calculator',
+    href: '/bmi-calculator',
+    description: 'Calculate Body Mass Index instantly. Check if you\'re healthy weight!',
     icon: Calculator,
-    color: 'bg-blue-500',
-    gradient: 'from-blue-400 to-blue-600',
-    count: '8 tools',
-    tools: [
-      { 
-        name: 'Basic Calculator', 
-        href: '/basic-calculator', 
-        icon: Calculator, 
-        description: 'For everyday arithmetic with history and memory functions.',
-        subFeatures: ['Addition, subtraction, multiplication, division', 'Memory recall', 'Calculation history']
-      },
-      { 
-        name: 'Scientific Calculator', 
-        href: '/scientific-calculator', 
-        icon: Sigma, 
-        description: 'Advanced functions, trig, logs with graphing capabilities.',
-        subFeatures: ['Trigonometric functions', 'Logarithms & exponents', 'Factorial & constants']
-      },
-      { name: 'Percentage Calculator', href: '/percentage-calculator', icon: Percent, description: 'Calculate percentages, tips, and discounts with markup formulas.', subFeatures: ['Tip splitter', 'Discount chains', 'Percentage change'] },
-      { name: 'BMI Calculator', href: '/bmi-calculator', icon: Heart, description: 'Check your Body Mass Index with categorization.', subFeatures: ['Adult & child modes', 'Ideal weight range', 'Health risk indicators'] },
-      { name: 'EMI / Loan Calculator', href: '/emi-calculator', icon: DollarSign, description: 'Calculate monthly loan payments with amortization schedules.', subFeatures: ['Interest rate variations', 'Loan tenure options', 'Total interest paid'] },
-      { name: 'Discount Calculator', href: '/discount-calculator', icon: Tag, description: 'Find the final sale price with multi-discount support.', subFeatures: ['Bulk discount calc', 'Tax inclusion', 'Savings breakdown'] },
-      { name: 'Grade Average Calculator', href: '/grade-average-calculator', icon: GraduationCap, description: 'Calculate your average score with weighted inputs.', subFeatures: ['Letter grade conversion', 'GPA mapping', 'Progress tracking'] },
-      { name: 'GPA Calculator', href: '/gpa-calculator', icon: GraduationCap, description: 'Calculate your weighted GPA with credit hours.', subFeatures: ['Semester GPA', 'Cumulative calc', 'Transcript import'] },
-    ]
+    category: 'Health',
+    badge: '🔥 Most Popular',
+    searches: '100K+/mo'
   },
   {
-    id: 'time-tools',
-    name: 'Time & Date Tools',
-    description: 'Convert time zones, calculate age, count days, and more with precise scheduling features.',
-    icon: Timer,
-    color: 'bg-green-500',
-    gradient: 'from-green-400 to-emerald-600',
-    count: '5 tools',
-    tools: [
-      { name: 'Time Zone Converter', href: '/time-zone-converter', icon: Globe, description: 'Convert time between major cities with DST support.', subFeatures: ['Auto-detect location', 'Meeting scheduler', 'Multiple zones'] },
-      { name: 'Age Calculator', href: '/age-calculator', icon: Calendar, description: 'Find your age in years, months, and days with zodiac info.', subFeatures: ['Exact seconds lived', 'Age milestones', 'Chinese zodiac'] },
-      { name: 'Days Between Dates', href: '/days-between-dates', icon: Clock, description: 'Count the number of days between two dates with exclusions.', subFeatures: ['Weekends only', 'Business days', 'Age in weeks'] },
-      { name: 'Unix Timestamp Converter', href: '/unix-timestamp', icon: Hash, description: 'Convert Unix time to a readable date with timezone adjust.', subFeatures: ['Batch convert', 'Future timestamps', 'Human readable'] },
-      { name: 'Countdown Timer', href: '/countdown-timer', icon: Timer, description: 'Count down to any date and time with alarms.', subFeatures: ['Embeddable widget', 'Share link', 'Recurring events'] },
-    ]
+    name: 'Age Calculator',
+    href: '/age-calculator',
+    description: 'How old am I? Calculate exact age in years, months & days.',
+    icon: Baby,
+    category: 'Life',
+    badge: '⭐ Trending',
+    searches: '150K+/mo'
   },
   {
-    id: 'measurement-converters',
-    name: 'Measurement Converters',
-    description: 'Convert length, weight, temperature, and various units with formula references.',
-    icon: Ruler,
-    color: 'bg-yellow-500',
-    gradient: 'from-yellow-400 to-orange-500',
-    count: '6 tools',
-    tools: [
-      { name: 'Length Converter', href: '/length-converter', icon: Ruler, description: 'Convert meters, feet, miles, etc. with precision.', subFeatures: ['Imperial to metric', 'Nautical units', 'Formula display'] },
-      { name: 'Weight Converter', href: '/weight-converter', icon: Weight, description: 'Convert kg, lbs, ounces, etc. for cooking and fitness.', subFeatures: ['Troy ounces', 'Stone units', 'Batch input'] },
-      { name: 'Temperature Converter', href: '/temperature-converter', icon: Thermometer, description: 'Convert Celsius, Fahrenheit, Kelvin with wind chill.', subFeatures: ['Heat index calc', 'Boiling points', 'Cooking temps'] },
-      { name: 'Area Converter', href: '/area-converter', icon: Square, description: 'Convert acres, hectares, m², etc. for land measurement.', subFeatures: ['Square feet calc', 'Perimeter tool', 'Map integration'] },
-      { name: 'Speed Converter', href: '/speed-converter', icon: Gauge, description: 'Convert km/h, mph, knots, etc. for travel.', subFeatures: ['Pace calculator', 'Fuel efficiency', 'Acceleration'] },
-      { name: 'Volume Converter', href: '/volume-converter', icon: Droplet, description: 'Convert liters, gallons, cups, etc. for recipes.', subFeatures: ['Dry vs liquid', 'Concentration', 'Tank volume'] },
-    ]
+    name: 'Percentage Calculator',
+    href: '/percentage-calculator',
+    description: 'Calculate percentages, % increase/decrease, tips & discounts.',
+    icon: Percent,
+    category: 'Math',
+    badge: '🔥 Super Popular',
+    searches: '200K+/mo'
   },
   {
-    id: 'clock-tools',
-    name: 'Clock & Timer Tools',
-    description: 'World clock, stopwatch, countdown timer, and alarm tools with synchronization.',
-    icon: Clock,
-    color: 'bg-sky-500',
-    gradient: 'from-sky-400 to-blue-500',
-    count: '2 tools',
-    tools: [
-      { name: 'World Clock', href: '/world-clock', icon: Clock, description: 'Check current time in cities worldwide with maps.', subFeatures: ['Analog/digital views', 'Sunrise/sunset', 'Multiple clocks'] },
-      { name: 'Online Stopwatch', href: '/stopwatch', icon: Timer, description: 'A precision stopwatch with lap timer and splits.', subFeatures: ['Export results', 'Voice alerts', 'Fullscreen mode'] },
-    ]
+    name: 'Scientific Calculator',
+    href: '/scientific-calculator',
+    description: 'Advanced calculator with sin, cos, log, sqrt & more functions.',
+    icon: Calculator,
+    category: 'Math',
+    badge: null,
+    searches: '100K+/mo'
   },
   {
-    id: 'productivity-tools',
-    name: 'Productivity & Utility',
-    description: 'Password generator, text tools, QR codes, and productivity boosters with integrations.',
-    icon: KeyRound,
-    color: 'bg-purple-500',
-    gradient: 'from-purple-400 to-indigo-600',
-    count: '5 tools',
-    tools: [
-      { name: 'Password Generator', href: '/password-generator', icon: KeyRound, description: 'Create secure random passwords with strength meter.', subFeatures: ['Custom length', 'Character sets', 'Password manager export'] },
-      { name: 'QR Code Generator', href: '/qr-code-generator', icon: QrCode, description: 'Generate QR codes with logos and error correction.', subFeatures: ['Dynamic URLs', 'vCard support', 'Download SVG/PNG'] },
-      { name: 'Barcode Generator', href: '/barcode-generator', icon: Barcode, description: 'Create UPC, EAN, and Code 128 with scanners.', subFeatures: ['Batch generation', 'Label printing', 'ISBN support'] },
-      { name: 'Case Converter', href: '/case-converter', icon: CaseSensitive, description: 'Convert text to any case with sentence support.', subFeatures: ['Title case smart', 'Camel/snake', 'Batch text'] },
-      { name: 'Word & Character Counter', href: '/word-counter', icon: ListOrdered, description: 'Count words and characters in real-time with readability.', subFeatures: ['SEO score', 'Reading time', 'Keyword density'] },
-    ]
+    name: 'Word Counter',
+    href: '/word-counter',
+    description: 'Count words, characters, sentences & paragraphs instantly.',
+    icon: FileText,
+    category: 'Writing',
+    badge: '✍️ Writers Love',
+    searches: '80K+/mo'
   },
   {
-    id: 'design-tools',
-    name: 'Design & Color Tools',
-    description: 'Color pickers, gradient generators, and design utilities for creators with exports.',
-    icon: Palette,
-    color: 'bg-pink-500',
-    gradient: 'from-pink-400 to-rose-600',
-    count: '3 tools',
-    tools: [
-      { name: 'Color Picker', href: '/color-picker', icon: Pipette, description: 'Pick a color and get HEX, RGB, HSL codes with harmony.', subFeatures: ['Eyedropper tool', 'Color wheel', 'Accessibility check'] },
-      { name: 'Gradient Generator', href: '/gradient-generator', icon: Layers, description: 'Create CSS, Flutter & React Native gradients with previews.', subFeatures: ['Multi-stop', 'Direction controls', 'Export code'] },
-      { name: 'Color Converter', href: '/color-converter', icon: Palette, description: 'Convert between HEX, RGB, and HSL with palettes.', subFeatures: ['Batch convert', 'Named colors', 'Contrast ratio'] },
-    ]
-  },
-  {
-    id: 'text-tools',
-    name: 'Text & Coding Utilities',
-    description: 'JSON formatter, Base64 encoder, text encryption, and developer tools with validation.',
-    icon: FileCode,
-    color: 'bg-gray-500',
-    gradient: 'from-gray-400 to-slate-600',
-    count: '4 tools',
-    tools: [
-      { name: 'JSON Formatter', href: '/json-formatter', icon: FileJson, description: 'Validate, format, and minify JSON data with tree view.', subFeatures: ['Error highlighting', 'Sort keys', 'JSON to CSV'] },
-      { name: 'Base64 Encoder/Decoder', href: '/base64-encoder-decoder', icon: Code, description: 'Encode or decode Base64 strings with file support.', subFeatures: ['Image to Base64', 'URL safe', 'Batch process'] },
-      { name: 'URL Encoder/Decoder', href: '/url-encoder-decoder', icon: ExternalLink, description: 'Encode/decode text for URL safety with percent encoding.', subFeatures: ['Query string builder', 'HTML entities', 'Escape sequences'] },
-      { name: 'Lorem Ipsum Generator', href: '/lorem-ipsum-generator', icon: Pilcrow, description: 'Generate placeholder text with custom lengths.', subFeatures: ['Paragraphs/words', 'Lists/tables', 'Random seeds'] },
-    ]
-  },
-  {
-    id: 'lifestyle-tools',
-    name: 'Lifestyle & Health',
-    description: 'Sleep calculator, health trackers, and personal wellness utilities with insights.',
-    icon: HeartPulse,
-    color: 'bg-red-500',
-    gradient: 'from-red-400 to-pink-600',
-    count: '2 tools',
-    tools: [
-      { name: 'Sleep Calculator', href: '/sleep-calculator', icon: Moon, description: 'Find the best time to wake up or sleep with cycles.', subFeatures: ['REM tracking', 'Nap planner', 'Sleep debt calc'] },
-      { name: 'Mood Tracker', href: '/mood-tracker', icon: Smile, description: 'A 100% private, local mood journal with trends.', subFeatures: ['Journal entries', 'Mood patterns', 'Export reports'] },
-    ]
-  },
-  {
-    id: 'file-tools',
-    name: 'File & Media Tools',
-    description: 'Image resizer, PDF tools, converters, and media processing utilities with batch.',
-    icon: File,
-    color: 'bg-indigo-500',
-    gradient: 'from-indigo-400 to-purple-600',
-    count: '4 tools',
-    tools: [
-      { name: 'Image Resizer', href: '/image-resizer', icon: FileImage, description: 'Resize JPG, PNG, and WEBP images with compression.', subFeatures: ['Batch resize', 'Aspect ratio lock', 'Quality slider'] },
-      { name: 'Image Cropper', href: '/image-cropper', icon: Crop, description: 'Crop and rotate images with aspect ratio presets.', subFeatures: ['Freehand crop', 'Object removal', 'Filter apply'] },
-      { name: 'Image to Base64', href: '/image-to-base64', icon: Code, description: 'Convert images to Base64 strings for web use.', subFeatures: ['Compress first', 'URL data', 'Copy to clipboard'] },
-      { name: 'PDF Merger', href: '/pdf-merger', icon: FileText, description: 'Combine multiple PDF files into one with reordering.', subFeatures: ['Page range', 'Watermark add', 'Compress output'] },
-    ]
-  },
-  {
-    id: 'misc-tools',
-    name: 'Miscellaneous & Fun',
-    description: 'Random generators, decision tools, and entertaining utilities with customizations.',
-    icon: Sparkles,
-    color: 'bg-orange-500',
-    gradient: 'from-orange-400 to-amber-600',
-    count: '6 tools',
-    tools: [
-      { name: 'Coin Flip & Dice Roll', href: '/coin-flip-dice-roll', icon: Coins, description: 'Get a random 50/50 or 1-in-6 result with animations.', subFeatures: ['Custom dice', 'History log', 'Share result'] },
-      { name: 'Random Number Generator', href: '/random-number-generator', icon: Hash, description: 'Get a random number in a range with sequences.', subFeatures: ['Lottery sim', 'UUID gen', 'Seed control'] },
-      { name: 'Decision Wheel', href: '/decision-wheel', icon: Disc, description: 'Let the wheel decide for you with custom segments.', subFeatures: ['Weighted probs', 'Sound effects', 'Mobile spin'] },
-      { name: 'Magic 8-Ball', href: '/magic-8-ball', icon: HelpCircle, description: 'Ask a yes-or-no question for an answer with history.', subFeatures: ['Custom answers', 'Shake detect', 'Fortune teller'] },
-      { name: 'Rock Paper Scissors', href: '/rock-paper-scissors', icon: Hand, description: 'Play the classic game vs. the CPU with stats.', subFeatures: ['Best of series', 'AI difficulty', 'Emoji mode'] },
-      { name: 'Quote Generator', href: '/quote-generator', icon: Quote, description: 'Get a random inspirational quote with authors.', subFeatures: ['Category filter', 'Share social', 'Daily quote'] },
-    ]
-  },
-];
-
-const featuredTools = [
-  {
-    name: 'Random Password Generator',
-    description: 'Create secure, customizable passwords instantly',
+    name: 'Password Generator',
     href: '/password-generator',
-    icon: KeyRound,
-    usage: 'Used 500+ times daily',
+    description: 'Generate strong, secure passwords. Uncrackable & random!',
+    icon: Lock,
+    category: 'Security',
+    badge: '🔒 Secure',
+    searches: '90K+/mo'
   },
   {
     name: 'QR Code Generator',
-    description: 'Generate QR codes for URLs, text, and contact info',
     href: '/qr-code-generator',
+    description: 'Create free QR codes for URLs, text, WiFi & more instantly.',
     icon: QrCode,
-    usage: 'Used 300+ times daily',
-  },
-  {
-    name: 'JSON Formatter',
-    description: 'Beautify, validate, and format JSON data easily',
-    href: '/json-formatter',
-    icon: FileJson,
-    usage: 'Used 400+ times daily',
+    category: 'Utilities',
+    badge: '📱 Mobile Friendly',
+    searches: '150K+/mo'
   },
   {
     name: 'Image Resizer',
-    description: 'Resize and compress images without quality loss',
     href: '/image-resizer',
-    icon: Crop,
-    usage: 'Used 250+ times daily',
+    description: 'Resize images online free. Compress, crop & convert photos.',
+    icon: Image,
+    category: 'Image',
+    badge: null,
+    searches: '60K+/mo'
   },
   {
-    name: 'Color Picker',
-    description: 'Pick colors and convert between HEX, RGB, HSL formats',
-    href: '/color-picker',
-    icon: Palette,
-    usage: 'Used 350+ times daily',
+    name: 'Unit Converter',
+    href: '/unit-converter',
+    description: 'Convert length, weight, temperature, area & volume units.',
+    icon: Ruler,
+    category: 'Converters',
+    badge: '🌍 All-in-One',
+    searches: '120K+/mo'
   },
   {
-    name: 'Sleep Calculator',
-    description: 'Calculate optimal sleep cycles and wake-up times',
-    href: '/sleep-calculator',
-    icon: Moon,
-    usage: 'Used 200+ times daily',
-  },
-];
-
-const advantages = [
-  {
-    icon: Shield,
-    title: '100% Client-Side Processing',
-    description:
-      'All tools run directly in your browser. Your data never leaves your device, ensuring complete privacy and security.',
+    name: 'EMI Calculator',
+    href: '/emi-calculator',
+    description: 'Calculate loan EMI, interest & payment schedule instantly.',
+    icon: Wallet,
+    category: 'Finance',
+    badge: '💰 Money Saver',
+    searches: '80K+/mo'
   },
   {
-    icon: Zap,
-    title: 'Instant Results',
-    description:
-      'No server delays. Get immediate results with real-time processing powered by modern web technologies.',
+    name: 'Discount Calculator',
+    href: '/discount-calculator',
+    description: 'Calculate sale prices, savings & discount percentages.',
+    icon: Percent,
+    category: 'Shopping',
+    badge: null,
+    searches: '50K+/mo'
   },
   {
+    name: 'Days Between Dates',
+    href: '/days-between-dates',
+    description: 'How many days until? Calculate days between any two dates.',
+    icon: Calendar,
+    category: 'Date',
+    badge: null,
+    searches: '40K+/mo'
+  },
+  {
+    name: 'Countdown Timer',
+    href: '/countdown-timer',
+    description: 'Free online countdown timer. Set custom timers for any event.',
+    icon: Timer,
+    category: 'Time',
+    badge: null,
+    searches: '50K+/mo'
+  },
+  {
+    name: 'Stopwatch',
+    href: '/stopwatch',
+    description: 'Free online stopwatch with lap times. Start timing now!',
+    icon: Timer,
+    category: 'Time',
+    badge: null,
+    searches: '40K+/mo'
+  },
+  {
+    name: 'World Clock',
+    href: '/world-clock',
+    description: 'Current time in every city. Check time zones worldwide.',
+    icon: Globe,
+    category: 'Time',
+    badge: null,
+    searches: '50K+/mo'
+  },
+  {
+    name: 'Basic Calculator',
+    href: '/basic-calculator',
+    description: 'Simple free calculator for everyday math. Add, subtract, multiply.',
     icon: Calculator,
-    title: 'No Installation Required',
-    description:
-      'Access all tools directly from your browser. No downloads, no installations, no registration needed.',
+    category: 'Math',
+    badge: null,
+    searches: '80K+/mo'
   },
-  {
-    icon: Users,
-    title: 'Built for Everyone',
-    description:
-      'From students and developers to designers and professionals - tools designed for all skill levels.',
-  },
-];
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { 
-      duration: 0.6 
-    } as Transition 
-  },
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 },
-  },
-};
-
-const modalVariants = {
-  hidden: { opacity: 0, scale: 0.95, y: 20 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: { duration: 0.3 } as Transition,
-  },
-  exit: {
-    opacity: 0,
-    scale: 0.95,
-    y: 20,
-    transition: { duration: 0.2 } as Transition,
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.05 },
-  }),
-};
-
-const introCards = [
-  {
-    title: 'Unlock Productivity with Free Online Tools',
-    description: 'From image resizers to BMI calculators, discover 50+ utilities that boost your daily workflow without compromising privacy.',
-    icon: Zap,
-    color: 'from-blue-500 to-indigo-600',
-  },
-  {
-    title: 'Secure & Instant Converters',
-    description: 'Resize images, merge PDFs, or convert time zones—all processed client-side for lightning-fast, secure results.',
-    icon: Shield,
-    color: 'from-green-500 to-emerald-600',
-  },
-  {
-    title: 'Tailored for Creators & Pros',
-    description: 'Designers love color pickers; developers swear by JSON formatters. Find your perfect tool today with specialized utilities.',
-    icon: Palette,
-    color: 'from-purple-500 to-pink-600',
-  },
-];
-
-const EnhancedAnimatedBackground = () => {
-  const bubbleColors = [
-    'bubble-blue', 'bubble-purple', 'bubble-sky', 'bubble-pink', 
-    'bubble-green', 'bubble-orange', 'bubble-yellow', 'bubble-indigo'
-  ];
-
-  const squareColors = [
-    'square-blue', 'square-purple', 'square-green', 'square-orange'
-  ];
-
-  return (
-    <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
-      <div className="absolute inset-0 opacity-50 dark:opacity-40">
-        {[...Array(16)].map((_, i) => (
-          <div
-            key={i}
-            className={`absolute rounded-full ${
-              bubbleColors[i % bubbleColors.length]
-            } animate-float-${i % 3 === 0 ? 'slow' : i % 3 === 1 ? 'medium' : 'fast'}`}
-            style={{
-              width: `${25 + (i * 6) % 50}px`,
-              height: `${25 + (i * 6) % 50}px`,
-              top: `${5 + (i * 8) % 85}%`,
-              left: `${3 + (i * 10) % 92}%`,
-              animationDelay: `${i * 0.4}s`,
-              filter: 'blur(4px)',
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="absolute inset-0 opacity-60 dark:opacity-50">
-        {[...Array(12)].map((_, i) => (
-          <motion.div
-            key={`square-${i}`}
-            className={`absolute ${squareColors[i % squareColors.length]} animate-square-roll`}
-            style={{
-              width: `${15 + (i * 5) % 35}px`,
-              height: `${15 + (i * 5) % 35}px`,
-              top: `${10 + (i * 7) % 80}%`,
-              left: `${5 + (i * 8) % 90}%`,
-              animationDelay: `${i * 1.5}s`,
-              borderRadius: '8px',
-            }}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const stepImages = [
-  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=300&fit=crop&auto=format", 
-  "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=300&fit=crop&auto=format"
 ];
 
 export default function HomePage() {
-  const [activeCategory, setActiveCategory] = useState<ToolCategory | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const { favorites } = useFavorites();
+  const { history } = useHistory();
 
-  useEffect(() => {
-    setMounted(true);
-    
-    if (activeCategory) {
-      document.body.classList.add('modal-open');
-    } else {
-      document.body.classList.remove('modal-open');
-    }
-    
-    return () => {
-      document.body.classList.remove('modal-open');
-    };
-  }, [activeCategory]);
+  const filteredTools = allTools.filter(tool =>
+    tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    tool.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    tool.category.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const popularTools = allTools.filter(t => t.badge);
+  const otherTools = allTools.filter(t => !t.badge);
 
   return (
-    <>
-      <EnhancedAnimatedBackground />
-      <div className="relative space-y-20 md:space-y-28 overflow-hidden">
-        <motion.section
-          className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 dark:from-primary/10 dark:via-secondary/10 dark:to-accent/10 rounded-3xl p-8 md:p-12 text-center border border-border"
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
+    <div className="space-y-16">
+
+      {/* Hero Section - SEO Optimized */}
+      <section className="relative text-center py-16 md:py-24 overflow-hidden">
+        {/* Abstract Background Shapes */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl -z-10 animate-pulse" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="space-y-6 max-w-4xl mx-auto"
         >
-          <div className="absolute inset-0 bg-grid-pattern opacity-40 dark:opacity-20"></div>
-          <motion.div
-            className="relative z-10"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-          >
-            <h1 className="text-5xl md:text-7xl font-black tracking-tight bg-gradient-to-r from-primary via-foreground to-primary bg-clip-text text-transparent mb-4">
-              WorksyHub
-            </h1>
-            <p className="mx-auto max-w-3xl text-xl md:text-2xl font-bold text-foreground mb-6">
-              50+ Free Online Tools: Image Resizer, PDF Merger, Time Zone Converter, BMI Calculator & More
-            </p>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground mb-8">
-              Effortless, private utilities that run in your browser. No sign-ups, no uploads—just pure productivity with client-side online converters, calculators, and tools for developers, students, and professionals.
-            </p>
-            <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
-              <motion.div className="flex items-center" initial={{ x: -20 }} animate={{ x: 0 }} transition={{ delay: 0.4 }}>
-                <CheckCircle className="mr-2 h-5 w-5 text-green-600 dark:text-green-500" />
-                <span className="font-semibold">100% Private</span>
-              </motion.div>
-              <motion.div className="flex items-center" initial={{ x: 20 }} animate={{ x: 0 }} transition={{ delay: 0.5 }}>
-                <CheckCircle className="mr-2 h-5 w-5 text-green-600 dark:text-green-500" />
-                <span className="font-semibold">Offline Ready</span>
-              </motion.div>
-              <motion.div className="flex items-center" initial={{ x: -20 }} animate={{ x: 0 }} transition={{ delay: 0.6 }}>
-                <CheckCircle className="mr-2 h-5 w-5 text-green-600 dark:text-green-500" />
-                <span className="font-semibold">Instant Access</span>
-              </motion.div>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-purple-500/20 text-primary text-sm font-bold border border-primary/30">
+            <TrendingUp className="w-4 h-4" />
+            <span>🔥 1M+ Calculations Done This Month</span>
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-black tracking-tight text-foreground leading-tight">
+            Free Online <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">Calculators</span> & Tools
+          </h1>
+
+          <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            <strong>100% Free</strong> • <strong>No Signup</strong> • <strong>Instant Results</strong><br />
+            Calculate BMI, convert units, generate passwords & QR codes in seconds!
+          </p>
+
+          <div className="relative max-w-lg mx-auto pt-4">
+            <Input
+              className="h-14 pl-14 pr-6 rounded-full shadow-xl border-2 border-primary/20 bg-background/90 backdrop-blur-xl transition-all focus:scale-105 focus:border-primary text-lg"
+              placeholder="Search tools... (e.g. BMI, converter, password)"
+              value={searchQuery}
+              onChange={(e: { target: { value: SetStateAction<string>; }; }) => setSearchQuery(e.target.value)}
+            />
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 mt-2 text-primary w-6 h-6" />
+          </div>
+
+          {/* Trust Badges */}
+          <div className="flex flex-wrap justify-center gap-6 pt-6 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <Shield className="w-5 h-5 text-green-500" />
+              <span>100% Private</span>
             </div>
-          </motion.div>
-        </motion.section>
+            <div className="flex items-center gap-2">
+              <Zap className="w-5 h-5 text-yellow-500" />
+              <span>Lightning Fast</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Star className="w-5 h-5 text-purple-500" />
+              <span>No Ads</span>
+            </div>
+          </div>
+        </motion.div>
+      </section>
 
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 relative"
-        >
-          <div className="absolute inset-0 bg-dots-pattern opacity-25 dark:opacity-10"></div>
-          {introCards.map((card, i) => {
-            const Icon = card.icon;
-            return (
-              <motion.div
-                key={card.title}
-                variants={itemVariants}
-                custom={i}
-                className="group relative overflow-hidden rounded-2xl bg-card text-card-foreground p-6 shadow-xl hover:shadow-2xl transition-all duration-500 border border-border"
-                whileHover={{ y: -10 }}
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${card.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
-                <div className="relative z-10">
-                  <motion.div
-                    className={`flex h-16 w-16 items-center justify-center rounded-2xl mb-4 text-primary-foreground shadow-lg group-hover:scale-110 transition-transform bg-gradient-to-br ${card.color}`}
-                    initial={{ rotate: -10 }}
-                    whileHover={{ rotate: 0 }}
-                  >
-                    <Icon className="h-8 w-8" />
-                  </motion.div>
-                  <h2 className="text-xl font-bold text-card-foreground mb-3">{card.title}</h2>
-                  <p className="text-muted-foreground">{card.description}</p>
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.section>
-
-        <motion.section
-          className="relative"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={fadeIn}
-        >
-          <div className="absolute inset-0 bg-waves-pattern opacity-20 dark:opacity-10"></div>
-          <motion.h2
-            className="mb-12 text-center text-4xl md:text-5xl font-black tracking-tight text-foreground"
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-          >
-            Most Popular Free Online Tools
-          </motion.h2>
-          <motion.div
-            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-            variants={staggerContainer}
-          >
-            {featuredTools.map((tool, i) => {
-              const IconComponent = tool.icon;
-              return (
-                <motion.div
-                  key={tool.name}
-                  variants={itemVariants}
-                  custom={i}
-                  whileHover={{ scale: 1.05, rotateY: 5 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
-                  className="group relative"
-                >
-                  <Link
-                    href={tool.href}
-                    className="block rounded-2xl bg-card text-card-foreground p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-border overflow-hidden relative"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5 dark:from-primary/10 dark:to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div className="relative z-10 flex items-start justify-between">
-                      <div className="flex-1">
-                        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2 }}>
-                          <IconComponent className="h-8 w-8 text-primary mb-4 group-hover:scale-110 transition-transform" />
-                        </motion.div>
-                        <h3 className="font-bold text-card-foreground group-hover:text-primary transition-colors mb-2">
-                          {tool.name}
-                        </h3>
-                        <p className="text-sm text-muted-foreground mb-3">{tool.description}</p>
-                        <div className="flex items-center text-xs text-muted-foreground">
-                          <Zap className="mr-2 h-4 w-4 text-yellow-500" />
-                          {tool.usage}
-                        </div>
-                      </div>
-                      <motion.div
-                        className="ml-4 opacity-0 group-hover:opacity-100 transition-all"
-                        initial={{ x: 10 }}
-                        animate={{ x: 0 }}
-                      >
-                        <ArrowRight className="h-6 w-6 text-primary" />
-                      </motion.div>
-                    </div>
+      {/* Favorites & History (Personalized) */}
+      {(favorites.length > 0 || history.length > 0) && (
+        <section className="grid md:grid-cols-2 gap-8">
+          {favorites.length > 0 && (
+            <div className="space-y-4">
+              <h2 className="text-xl font-bold flex items-center gap-2">
+                <Heart className="w-5 h-5 text-red-500 fill-red-500" /> Your Favorites
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {favorites.map((fav) => (
+                  <Link key={fav.href} href={fav.href}>
+                    <Card className="p-4 hover:shadow-md transition-all border-l-4 border-l-primary cursor-pointer hover:scale-[1.02]">
+                      <div className="font-medium">{fav.name}</div>
+                      <div className="text-xs text-muted-foreground">{fav.category}</div>
+                    </Card>
                   </Link>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </motion.section>
+                ))}
+              </div>
+            </div>
+          )}
 
-        <motion.section
-          id="categories"
-          className="relative"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={fadeIn}
-        >
-          <div className="absolute inset-0 bg-grid-pattern opacity-25 dark:opacity-10"></div>
-          <motion.h2
-            className="mb-12 text-center text-4xl md:text-5xl font-black tracking-tight text-foreground"
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-          >
-            Explore Tool Categories
-          </motion.h2>
-          <motion.div
-            className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-            variants={staggerContainer}
-          >
-            {toolCategories.map((tool, i) => {
-              const IconComponent = tool.icon;
-              return (
-                <motion.div
-                  key={tool.name}
-                  custom={i}
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.05, rotateX: 5 }}
-                  transition={{ type: 'spring', stiffness: 400 }}
-                  className="group relative"
-                >
-                  <button
-                    onClick={() => setActiveCategory(tool)}
-                    className="group block w-full overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 bg-card text-card-foreground border border-border relative text-left"
-                  >
-                    <div className="relative h-48 overflow-hidden rounded-t-3xl bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20">
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                      <motion.div
-                        className={`absolute inset-0 flex items-center justify-center opacity-40 group-hover:opacity-100 transition-opacity bg-gradient-to-br ${tool.gradient}`}
-                      >
-                        <IconComponent className="h-16 w-16 text-white drop-shadow-2xl" />
-                      </motion.div>
-                      <div className="absolute bottom-4 left-4 right-4">
-                        <span className="bg-white/90 dark:bg-card/90 text-foreground px-3 py-1 rounded-full text-sm font-semibold shadow-md">
-                          {tool.count}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="font-bold text-xl text-card-foreground group-hover:text-primary transition-colors mb-2">
-                        {tool.name}
-                      </h3>
-                      <p className="text-sm text-muted-foreground mb-4">{tool.description}</p>
-                      <div className="flex items-center text-primary font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                        Dive In <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                      </div>
-                    </div>
-                  </button>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </motion.section>
+          {history.length > 0 && (
+            <div className="space-y-4">
+              <h2 className="text-xl font-bold flex items-center gap-2">
+                <Clock className="w-5 h-5 text-blue-500" /> Recently Used
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {history.map((item) => (
+                  <Link key={item.href} href={item.href}>
+                    <Card className="p-4 hover:shadow-md transition-all border-l-4 border-l-secondary cursor-pointer hover:scale-[1.02]">
+                      <div className="font-medium">{item.title}</div>
+                      <div className="text-xs text-muted-foreground">Last used just now</div>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+      )}
 
-        <motion.section
-          className="relative py-16 bg-gradient-to-r from-blue-50/50 to-indigo-50/50 dark:from-card dark:to-muted rounded-3xl border border-border"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
-          variants={fadeIn}
-        >
-          <div className="absolute inset-0 bg-waves-pattern opacity-20 dark:opacity-10"></div>
-          <motion.h2
-            className="mb-16 text-center text-4xl font-black text-foreground"
-            initial={{ y: 30 }}
-            animate={{ y: 0 }}
-          >
-            How WorksyHub Works
-          </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {[
-              {
-                icon: Search,
-                title: 'Pick Your Tool',
-                desc: 'Browse 50+ free online tools from calculators to converters. Select from essential utilities optimized for quick access.',
-              },
-              {
-                icon: Settings,
-                title: 'Input Securely',
-                desc: 'Enter data or upload files—all stays local in your browser. Enjoy complete privacy with client-side processing.',
-              },
-              {
-                icon: Cpu,
-                title: 'Get Magic Results',
-                desc: 'Instant, accurate outputs with zero server involvement. Experience lightning-fast performance in all tools.',
-              },
-            ].map((item, i) => {
-              const StepIcon = item.icon;
-              return (
-                <motion.div
-                  key={item.title}
-                  custom={i}
-                  variants={itemVariants}
-                  className="text-center group relative"
-                  whileHover={{ y: -10 }}
-                >
-                  <div className="relative mb-6 h-64 w-full overflow-hidden rounded-2xl mx-auto max-w-sm bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20 flex items-center justify-center border border-border">
-                    <img 
-                      src={stepImages[i]} 
-                      alt={item.title}
-                      className="absolute inset-0 w-full h-full object-cover opacity-80"
-                    />
-                    <div className="absolute inset-0 bg-black/30"></div>
-                    <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center font-bold shadow-2xl z-10">
-                      <StepIcon className="h-6 w-6" />
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold text-foreground mb-3">{item.title}</h3>
-                  <p className="text-muted-foreground">{item.desc}</p>
-                </motion.div>
-              );
-            })}
+      {/* Popular Tools Section */}
+      {!searchQuery && (
+        <section className="space-y-8">
+          <div className="flex items-center gap-3">
+            <TrendingUp className="w-6 h-6 text-primary" />
+            <h2 className="text-3xl font-bold tracking-tight">🔥 Most Popular Tools</h2>
           </div>
-        </motion.section>
 
-        <motion.section
-          className="relative"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
-          variants={staggerContainer}
-        >
-          <div className="absolute inset-0 bg-dots-pattern opacity-25 dark:opacity-10"></div>
-          <motion.h2
-            className="mb-12 text-center text-4xl font-black text-foreground"
-            initial={{ y: 30 }}
-            animate={{ y: 0 }}
-          >
-            Why Choose WorksyHub?
-          </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {advantages.map((advantage, index) => {
-              const IconComponent = advantage.icon;
-              return (
-                <motion.div
-                  key={advantage.title}
-                  variants={itemVariants}
-                  custom={index}
-                  className="text-center p-6 rounded-2xl bg-card text-card-foreground shadow-lg hover:shadow-xl transition-shadow duration-300 border border-border group relative"
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <div className="flex h-16 w-16 mx-auto mb-4 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-secondary text-primary-foreground shadow-lg group-hover:rotate-12 transition-transform">
-                    <IconComponent className="h-8 w-8" />
-                  </div>
-                  <h3 className="text-xl font-bold text-card-foreground mb-3">{advantage.title}</h3>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    {advantage.description.split('. ').map((sub, j) => (
-                      <li key={j} className="flex items-center justify-center">
-                        <CheckCircle className="mr-2 h-4 w-4 text-green-600 dark:text-green-500 shrink-0" />
-                        <span>{sub.trim()}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              );
-            })}
-          </div>
-        </motion.section>
-
-        <motion.section
-          className="relative py-16 bg-gradient-to-r from-rose-50/50 to-pink-50/50 dark:from-card dark:to-muted rounded-3xl border border-border"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeIn}
-        >
-          <div className="absolute inset-0 bg-waves-pattern opacity-20 dark:opacity-10"></div>
-          <motion.h2
-            className="mb-12 text-center text-4xl font-black text-foreground"
-            initial={{ y: 30 }}
-            animate={{ y: 0 }}
-          >
-            Got Questions? We've Got Answers
-          </motion.h2>
-          <div className="max-w-4xl mx-auto space-y-6">
-            {[
-              { q: 'What makes WorksyHub the best free online tools website?', a: 'WorksyHub offers 50+ client-side converters and calculators ensuring privacy with no data upload.' },
-              { q: 'Are these online converters secure?', a: 'Yes, all free online converters run locally in your browser, perfect for secure use.' },
-              { q: 'How does the time zone converter free work?', a: 'Our time zone converter supports 100+ cities for instant global time differences.' },
-              { q: 'Can I use the BMI calculator offline?', a: 'Absolutely, all tools including BMI calculator work offline after loading.' },
-              { q: 'What sub-features does the JSON formatter have?', a: 'Validate, beautify, minify JSON with error highlighting and tree view for developers.' },
-              { q: 'Is the QR code generator with logo customizable?', a: 'Yes, add logos, colors, and sizes for free QR code generation.' },
-              { q: 'How accurate is the age calculator by date of birth?', a: 'It calculates exact age in years, months, days, hours, and even seconds.' },
-              { q: 'Does the EMI calculator support different loan types?', a: 'Yes, home, car, personal loans with variable interest and tenure options.' },
-              { q: 'Can I batch resize images with the image resizer?', a: 'Yes, upload multiple files for simultaneous resizing with custom dimensions.' },
-              { q: 'What formats does the PDF merger support?', a: 'Merge any PDF files, reorder pages, and compress without quality loss.' },
-            ].map((faq, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {popularTools.map((tool, index) => (
               <motion.div
-                key={i}
-                custom={i}
-                variants={itemVariants}
-                className="group border border-border rounded-2xl p-6 hover:bg-primary/5 dark:hover:bg-muted/50 transition-colors duration-300 overflow-hidden bg-card"
-                whileHover={{ scale: 1.02 }}
+                key={tool.href}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
+                viewport={{ once: true }}
               >
-                <h3 className="font-semibold text-foreground mb-3 flex items-center justify-between group-hover:text-primary transition-colors">
-                  {faq.q}
-                  <MessageCircle className="h-6 w-6 opacity-70 group-hover:opacity-100 shrink-0 ml-2" />
-                </h3>
-                <p className="text-muted-foreground">{faq.a}</p>
+                <Link href={tool.href} className="group h-full block">
+                  <Card className="h-full p-6 hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-primary/30 bg-gradient-to-br from-card via-card to-primary/5 group-hover:-translate-y-2 relative overflow-hidden">
+                    {tool.badge && (
+                      <div className="absolute top-3 right-3 px-2 py-1 text-xs font-bold rounded-full bg-gradient-to-r from-primary/20 to-purple-500/20 text-primary">
+                        {tool.badge}
+                      </div>
+                    )}
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/10 to-purple-500/10 group-hover:from-primary/20 group-hover:to-purple-500/20 flex items-center justify-center mb-4 text-primary transition-all group-hover:scale-110">
+                      <tool.icon className="w-7 h-7" />
+                    </div>
+                    <h3 className="font-bold text-xl mb-2 group-hover:text-primary transition-colors">{tool.name}</h3>
+                    <p className="text-sm text-muted-foreground mb-3">{tool.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded-full">{tool.category}</span>
+                      <span className="text-xs text-green-600 font-medium">{tool.searches}</span>
+                    </div>
+                  </Card>
+                </Link>
               </motion.div>
             ))}
           </div>
-        </motion.section>
+        </section>
+      )}
 
-        <motion.section
-          className="text-center py-16 relative"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={fadeIn}
-        >
-          <div className="absolute inset-0 bg-grid-pattern opacity-25 dark:opacity-10"></div>
-          <motion.h2
-            className="text-3xl md:text-4xl font-black bg-gradient-to-r from-primary via-foreground to-primary bg-clip-text text-transparent mb-4"
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
-          >
-            Ready to Supercharge Your Workflow?
-          </motion.h2>
-          <p className="mx-auto max-w-2xl text-xl text-muted-foreground mb-8">
-            Dive into a world of free, private tools trusted by thousands. Start exploring now with our comprehensive suite of online converters, calculators, and utilities.
-          </p>
-          <motion.div
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            <Link
-              href="#categories"
-              className="inline-flex items-center rounded-2xl bg-gradient-to-r from-primary to-secondary px-8 py-4 text-lg font-bold text-primary-foreground shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300"
-            >
-              Launch Your First Tool
-              <ArrowRight className="ml-3 h-5 w-5" />
-            </Link>
-          </motion.div>
-        </motion.section>
+      {/* All Tools Grid */}
+      <section className="space-y-8">
+        <div className="flex items-center justify-between">
+          <h2 className="text-3xl font-bold tracking-tight">
+            {searchQuery ? 'Search Results' : 'All Free Tools'}
+          </h2>
+          <div className="text-sm text-muted-foreground bg-muted px-4 py-2 rounded-full font-medium">
+            {filteredTools.length} tools available
+          </div>
+        </div>
 
-        {activeCategory && mounted && (
-          <motion.div
-            className="fixed inset-0 bg-black/80 backdrop-blur-lg z-50 flex items-center justify-center p-4"
-            onClick={() => setActiveCategory(null)}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={modalVariants}
-          >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {(searchQuery ? filteredTools : otherTools).map((tool, index) => (
             <motion.div
-              className="bg-card border border-border rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-              variants={modalVariants}
+              key={tool.href}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.03 }}
+              viewport={{ once: true }}
             >
-              <div className="bg-gradient-to-r from-gray-900 to-gray-700 p-6 text-white">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    {(() => {
-                      const Icon = activeCategory.icon;
-                      return <Icon className="h-8 w-8" />;
-                    })()}
-                    <h2 className="text-2xl font-bold">{activeCategory.name}</h2>
+              <Link href={tool.href} className="group h-full block">
+                <Card className="h-full p-5 hover:shadow-xl transition-all duration-300 border-transparent hover:border-primary/20 bg-gradient-to-br from-card to-secondary/20 group-hover:-translate-y-1">
+                  <div className="w-12 h-12 rounded-xl bg-primary/5 group-hover:bg-primary/10 flex items-center justify-center mb-4 text-primary transition-colors">
+                    <tool.icon className="w-6 h-6" />
                   </div>
-                  <motion.button 
-                    onClick={() => setActiveCategory(null)} 
-                    className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <X className="h-6 w-6" />
-                  </motion.button>
-                </div>
-                <p className="mt-2 text-white/90 text-sm">{activeCategory.description}</p>
-              </div>
-              
-              <div className="p-6 max-h-[calc(90vh-120px)] overflow-y-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {activeCategory.tools.map((tool, i) => {
-                    const ToolIcon = tool.icon;
-                    return (
-                      <motion.div
-                        key={tool.name}
-                        custom={i}
-                        variants={itemVariants}
-                        className="group"
-                      >
-                        <Link 
-                          href={tool.href} 
-                          className="block p-4 rounded-xl border border-border bg-background hover:border-primary/50 hover:shadow-lg transition-all duration-300 group"
-                          onClick={() => setActiveCategory(null)}
-                        >
-                          <div className="flex items-start space-x-3">
-                            <div className={`p-2 rounded-lg bg-gradient-to-br ${activeCategory.gradient} text-white`}>
-                              <ToolIcon className="h-5 w-5" />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
-                                {tool.name}
-                              </h3>
-                              <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-                                {tool.description}
-                              </p>
-                              {tool.subFeatures && (
-                                <div className="mt-2">
-                                  <div className="flex flex-wrap gap-1">
-                                    {tool.subFeatures.slice(0, 2).map((feature, index) => (
-                                      <span 
-                                        key={index}
-                                        className="inline-block px-2 py-1 text-xs bg-primary/10 text-primary rounded-md"
-                                      >
-                                        {feature}
-                                      </span>
-                                    ))}
-                                    {tool.subFeatures.length > 2 && (
-                                      <span className="inline-block px-2 py-1 text-xs bg-muted text-muted-foreground rounded-md">
-                                        +{tool.subFeatures.length - 2} more
-                                      </span>
-                                    )}
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                            <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-all group-hover:translate-x-1 shrink-0 mt-1" />
-                          </div>
-                        </Link>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
+                  <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">{tool.name}</h3>
+                  <p className="text-sm text-muted-foreground">{tool.description}</p>
+                </Card>
+              </Link>
             </motion.div>
-          </motion.div>
-        )}
+          ))}
+        </div>
 
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'FAQPage',
-              mainEntity: [
-                {
-                  '@type': 'Question',
-                  name: 'What makes WorksyHub the best free online tools website?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'WorksyHub offers 50+ client-side converters and calculators ensuring privacy with no data upload.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'Are these online converters secure?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'Yes, all free online converters run locally in your browser, perfect for secure use.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'How does the time zone converter free work?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'Our time zone converter supports 100+ cities for instant global time differences.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'Can I use the BMI calculator offline?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'Absolutely, all tools including BMI calculator work offline after loading.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'What sub-features does the JSON formatter have?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'Validate, beautify, minify JSON with error highlighting and tree view for developers.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'Is the QR code generator with logo customizable?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'Yes, add logos, colors, and sizes for free QR code generation.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'How accurate is the age calculator by date of birth?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'It calculates exact age in years, months, days, hours, and even seconds.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'Does the EMI calculator support different loan types?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'Yes, home, car, personal loans with variable interest and tenure options.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'Can I batch resize images with the image resizer?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'Yes, upload multiple files for simultaneous resizing with custom dimensions.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'What formats does the PDF merger support?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'Merge any PDF files, reorder pages, and compress without quality loss.',
-                  },
-                },
-              ],
-            }),
-          }}
-        />
-      </div>
-    </>
+        {filteredTools.length === 0 && (
+          <div className="text-center py-16">
+            <div className="text-6xl mb-4">🔍</div>
+            <p className="text-xl text-muted-foreground">
+              No tools found matching "{searchQuery}"
+            </p>
+            <p className="text-muted-foreground mt-2">Try "BMI", "converter", or "password"</p>
+          </div>
+        )}
+      </section>
+
+      {/* Features Grid */}
+      <section className="grid md:grid-cols-3 gap-8 py-12 border-t">
+        {[
+          { icon: Shield, title: "100% Private", desc: "All calculations happen in your browser. Your data never leaves your device. Zero tracking." },
+          { icon: Zap, title: "Lightning Fast", desc: "Instant results with no server calls. Works offline once loaded. Mobile optimized." },
+          { icon: Users, title: "Free Forever", desc: "No subscriptions, no hidden fees, no signup required. Free for everyone, always." },
+        ].map((feature, i) => (
+          <div key={i} className="text-center space-y-4 p-6">
+            <div className="mx-auto w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-purple-500/10 flex items-center justify-center text-primary">
+              <feature.icon className="w-8 h-8" />
+            </div>
+            <h3 className="font-bold text-xl">{feature.title}</h3>
+            <p className="text-muted-foreground">{feature.desc}</p>
+          </div>
+        ))}
+      </section>
+
+      {/* SEO Content Section */}
+      <section className="border-t pt-12 space-y-8">
+        <h2 className="text-3xl font-bold text-center">Why Use WorksyHub Online Tools?</h2>
+        <div className="prose prose-lg dark:prose-invert max-w-4xl mx-auto text-muted-foreground">
+          <p>
+            <strong>WorksyHub</strong> is your one-stop destination for free online calculators and tools. Whether you need to <strong>calculate your BMI</strong>, <strong>generate a secure password</strong>, <strong>create a QR code</strong>, or <strong>convert units</strong>, we've got you covered with fast, accurate, and privacy-focused tools.
+          </p>
+          <p>
+            Unlike other websites, our tools work <strong>100% in your browser</strong> – no data is ever sent to servers. This means your calculations are private, instant, and work even offline. We don't show ads, don't require signup, and never track your usage.
+          </p>
+          <h3 className="text-xl font-bold text-foreground">Popular Free Tools:</h3>
+          <ul>
+            <li><strong>BMI Calculator</strong> - Calculate your Body Mass Index and understand your health status</li>
+            <li><strong>Age Calculator</strong> - Find out exactly how old you are in years, months, and days</li>
+            <li><strong>Percentage Calculator</strong> - Calculate percentages, discounts, tips, and more</li>
+            <li><strong>Password Generator</strong> - Create strong, uncrackable passwords instantly</li>
+            <li><strong>QR Code Generator</strong> - Generate free QR codes for URLs, text, WiFi, and more</li>
+            <li><strong>Unit Converter</strong> - Convert length, weight, temperature, and other units</li>
+          </ul>
+          <p>
+            All tools are mobile-friendly, work on any device, and deliver results in milliseconds. Start using our free calculators today – no download required!
+          </p>
+        </div>
+      </section>
+
+    </div>
   );
 }

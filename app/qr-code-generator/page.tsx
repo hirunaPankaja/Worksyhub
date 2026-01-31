@@ -55,17 +55,17 @@ export default function QRCodeGeneratorPage() {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
-      
+
       const img = new Image();
       img.onload = () => {
         canvas.width = qrSize;
         canvas.height = qrSize;
-        
+
         ctx.fillStyle = qrBgColor;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
+
         ctx.drawImage(img, 0, 0, qrSize, qrSize);
-        
+
         const pngUrl = canvas.toDataURL('image/png');
         let downloadLink = document.createElement('a');
         downloadLink.href = pngUrl;
@@ -74,7 +74,7 @@ export default function QRCodeGeneratorPage() {
         downloadLink.click();
         document.body.removeChild(downloadLink);
       };
-      
+
       img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
     }
   };
@@ -103,7 +103,7 @@ export default function QRCodeGeneratorPage() {
       {/* --- QR Code Tool - MOVED TO TOP --- */}
       <div className="p-6 rounded-xl border bg-card shadow-sm">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          
+
           {/* --- Controls --- */}
           <div className="space-y-6">
             <div className="space-y-4">
@@ -205,7 +205,7 @@ export default function QRCodeGeneratorPage() {
                   className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
                 />
               </div>
-              
+
               {qrImage && (
                 <button
                   onClick={() => setQrImage(null)}
@@ -232,7 +232,7 @@ export default function QRCodeGeneratorPage() {
               <h3 className="font-semibold text-lg mb-1">Live Preview</h3>
               <p className="text-sm text-muted-foreground">Scan test recommended</p>
             </div>
-            
+
             <div
               className="p-4 rounded-lg border-2 border-dashed border-gray-300"
               ref={qrCodeRef}
@@ -249,16 +249,16 @@ export default function QRCodeGeneratorPage() {
                 imageSettings={
                   qrImage
                     ? {
-                        src: qrImage,
-                        height: Math.min(qrSize, 200) * 0.2,
-                        width: Math.min(qrSize, 200) * 0.2,
-                        excavate: true,
-                      }
+                      src: qrImage,
+                      height: Math.min(qrSize, 200) * 0.2,
+                      width: Math.min(qrSize, 200) * 0.2,
+                      excavate: true,
+                    }
                     : undefined
                 }
               />
             </div>
-            
+
             <div className="mt-4 flex items-center gap-2 text-sm text-green-600">
               <CheckCircle className="h-4 w-4" />
               <span>Optimized for scanning</span>
@@ -320,20 +320,20 @@ export default function QRCodeGeneratorPage() {
       <div className="prose prose-lg max-w-none text-foreground space-y-6 p-6 rounded-xl bg-muted/30">
         <h2 className="text-2xl font-bold text-foreground">Free QR Code Generator - Create Custom QR Codes Online</h2>
         <p>
-          Welcome to our advanced <strong>free QR code generator</strong> - the ultimate tool for creating professional, 
-          <strong>custom QR codes</strong> with complete creative control. Generate stunning <strong>QR codes with logos</strong>, 
-          custom colors, and unique designs in seconds. Perfect for <strong>business marketing</strong>, 
+          Welcome to our advanced <strong>free QR code generator</strong> - the ultimate tool for creating professional,
+          <strong>custom QR codes</strong> with complete creative control. Generate stunning <strong>QR codes with logos</strong>,
+          custom colors, and unique designs in seconds. Perfect for <strong>business marketing</strong>,
           <strong>personal use</strong>, <strong>restaurant menus</strong>, <strong>event invitations</strong>, and much more.
         </p>
         <p>
-          Our <strong>QR code maker</strong> supports all types of data including URLs, text, contact information, 
-          WiFi credentials, and more. Create <strong>high-quality QR codes</strong> that work perfectly on both digital 
-          and print materials. Download your designs as <strong>high-resolution PNG files</strong> with crisp, clean 
+          Our <strong>QR code maker</strong> supports all types of data including URLs, text, contact information,
+          WiFi credentials, and more. Create <strong>high-quality QR codes</strong> that work perfectly on both digital
+          and print materials. Download your designs as <strong>high-resolution PNG files</strong> with crisp, clean
           edges that maintain quality at any size.
         </p>
         <p>
-          Experience <strong>enterprise-level QR code generation</strong> without the enterprise price tag. All features 
-          are available 100% free with no registration required. Create unlimited <strong>custom QR codes</strong> with 
+          Experience <strong>enterprise-level QR code generation</strong> without the enterprise price tag. All features
+          are available 100% free with no registration required. Create unlimited <strong>custom QR codes</strong> with
           no watermarks or limitations.
         </p>
       </div>
@@ -478,14 +478,14 @@ export default function QRCodeGeneratorPage() {
           <a href="/password-generator" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors text-sm">
             Password Generator
           </a>
-          <a href="/case-converter" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors text-sm">
-            Case Converter
+          <a href="/unit-converter" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors text-sm">
+            Unit Converter
           </a>
           <a href="/word-counter" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors text-sm">
             Word Counter
           </a>
-          <a href="/barcode-generator" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors text-sm">
-            Barcode Generator
+          <a href="/bmi-calculator" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors text-sm">
+            BMI Calculator
           </a>
         </div>
       </div>

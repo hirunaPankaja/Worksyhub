@@ -1,151 +1,94 @@
 // src/app/layout.tsx
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Poppins } from 'next/font/google';
 import './globals.css';
 
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { AdBanner } from '@/components/AdBanner';
+import { FavoritesProvider } from '@/components/features/FavoritesProvider';
+import { HistoryTracker } from '@/components/features/HistoryTracker';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const poppins = Poppins({
+  weight: ['400', '600', '700', '800'],
+  subsets: ['latin'],
+  variable: '--font-poppins'
+});
 
 export const metadata: Metadata = {
   title: {
-    template: '%s - WorksyHub', // <-- UPDATED: Brand name at the end
-    default: 'WorksyHub - 40+ Free Online Converters, Calculators & Tools',
+    template: '%s | WorksyHub - Free Online Tools',
+    default: 'WorksyHub - Free Online Calculator, Unit Converter & Tools',
   },
   description:
-    'WorksyHub offers a free collection of 40+ simple online tools including time zone converters, image resizers, PDF mergers, password generators, and health calculators. All tools are 100% private and client-side.',
+    'Free online calculators & tools: BMI Calculator, Age Calculator, Percentage Calculator, Unit Converter, Password Generator, QR Code Generator & more. 100% free, no signup, instant results!',
   keywords: [
-    // --- UPDATED & EXPANDED KEYWORDS ---
-    'free online tools',
-    'online converters',
-    'online calculators',
-    'developer tools',
-    'productivity tools',
-    'worksyhub',
-    'image resizer',
-    'pdf merger',
-    'time zone converter',
-    'age calculator',
+    // High volume keywords
+    'free online calculator',
+    'online calculator',
     'bmi calculator',
-    'gpa calculator',
+    'age calculator',
+    'percentage calculator',
+    'unit converter',
     'password generator',
     'qr code generator',
-    'color picker',
-    'json formatter',
-    'base64 encoder',
     'word counter',
-    'client-side tools',
-    'no upload tools',
-    'private online tools',
-    'css gradient generator',
-    'lorem ipsum generator',
-    'online stopwatch',
-    'world clock',
-    'sleep calculator',
-    'online file tools',
-    'text case converter',
-    'url encoder decoder',
-    'random number generator',
-    'decision wheel',
-    'magic 8 ball',
-    'rock paper scissors',
-    'how to resize an image',
-    'how to merge pdf',
-    'what is my bmi',
-    'when should i wake up',
-    'free tools for developers',
-    'free tools for students',
-    'free tools for designers',
-    'online utilities',
-    'web tools',
-    'online text editor',
-    'image to base64',
-    'image cropper online',
+    'scientific calculator',
     'emi calculator',
+    'loan calculator',
     'discount calculator',
-    'unit converter',
-    'length converter',
-    'weight converter',
-    'temperature converter',
-    'area converter',
-    'speed converter',
-    'volume converter',
-    'unix timestamp converter',
-    'days between dates',
-    'barcode generator',
-    'secure password creator',
-    'custom qr code with logo',
-    'hex to rgb converter',
-    'rgb to hex',
-    'color palette generator',
-    'code beautifier',
-    'minify json',
-    'decode base64',
-    'encode url',
-    'decode url',
-    'placeholder text generator',
-    'online mood journal',
-    'private mood tracker',
-    'offline tools',
-    'pwa tools',
-    'best free online tools',
-    'all-in-one tools website',
-    'time tools',
-    'math calculators',
-    'text analysis tools',
-    'random generators',
-    'online games',
-    'quote of the day',
-    'image editing tools',
-    'pdf utilities',
-    'health calculators',
-    'financial calculators',
-    'academic calculators',
-    'no-sign-up tools',
-    'fast online tools',
-    'simple online tools',
-    'what is my ip',
-    'md5 generator',
-    'sha256 generator',
-    'online notepad',
-    'character count',
-    'word count tool',
-    'what is my user agent',
-    'free web utilities',
-    'privacy-first tools',
-    'no-server tools',
-    'image compressor',
+    'free tools online',
+    'online tools',
+    'calculate bmi',
+    'convert units',
+    'meters to feet',
+    'kg to lbs',
+    'celsius to fahrenheit',
+    'secure password generator',
+    'free qr code',
+    'countdown timer online',
+    'stopwatch online',
+    'world clock',
+    'worksyhub'
   ],
-   openGraph: {
-   title: 'WorksyHub - 50+ Free Online Tools: Converters, Calculators, Productivity Utilities',
-    description:
-      'Explore WorksyHub for free online image resizers, PDF mergers, time zone converters, BMI calculators, password generators, QR codes, JSON formatters, and more. 100% private, client-side processing for instant, secure results.',
-    url: 'https://worksyhub.online',
-    siteName: 'WorksyHub',
+  metadataBase: new URL('https://worksyhub.online'),
+  openGraph: {
     type: 'website',
     locale: 'en_US',
+    url: 'https://worksyhub.online',
+    siteName: 'WorksyHub',
+    title: 'WorksyHub - Free Online Calculator, Converter & Tools',
+    description: 'Free online calculators & tools. Calculate BMI, convert units, generate passwords & QR codes. 100% free, instant results, no signup!',
     images: [
       {
-        url: 'https://worksyhub.online/og-image.png', // <-- put og-image.png in /public
+        url: '/og-image.png',
         width: 1200,
         height: 630,
         alt: 'WorksyHub - Free Online Tools',
       },
     ],
   },
-
   twitter: {
     card: 'summary_large_image',
-    title: 'WorksyHub - 40+ Free Online Tools',
-    description:
-      'Free converters, calculators, and no-upload client-side tools.',
-    images: ['https://worksyhub.online/og-image.png'],
+    title: 'WorksyHub - Free Online Tools',
+    description: 'Free calculators & tools: BMI, Age, Percentage Calculator, Unit Converter, Password Generator & more!',
   },
-
-  metadataBase: new URL('https://worksyhub.online'),
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'your-google-verification-code', // Add your Google Search Console verification
+  },
 };
 
 export default function RootLayout({
@@ -153,37 +96,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'WorksyHub',
-    url: 'https://worksyhub.online',
-    description:
-      'WorksyHub provides free simple online tools like converters, calculators, productivity utilities, design tools, and text utilities.',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: 'https://worksyhub.online/search?q={search_term_string}',
-      'query-input': 'required name=search_term_string',
-    },
-  };
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* JSON-LD Structured Data for SEO */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        
-        {/* --- PWA Manifest Link (NEW) --- */}
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#000000" />
-        {/* --- End PWA Links --- */}
-        
+        {/* Preconnect for performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body
-        className={`${inter.variable} font-sans antialiased flex flex-col min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-50`}
+        className={`${inter.variable} ${poppins.variable} font-sans antialiased flex flex-col min-h-screen bg-background text-foreground selection:bg-primary/20`}
       >
         <ThemeProvider
           attribute="class"
@@ -191,21 +112,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* Header Section */}
-          <Header />
-
-          {/* Main Content Area with balanced padding */}
-          <main className="mx-auto w-full max-w-7xl flex-grow px-2 sm:px-4 md:px-6 py-8 md:py-12">
-            {children}
-
-            {/* Ad Banner Placement */}
-            <div className="mt-8 md:mt-12">
-              <AdBanner />
-            </div>
-          </main>
-
-          {/* Footer Section */}
-          <Footer />
+          <FavoritesProvider>
+            <HistoryTracker />
+            <Header />
+            <main className="flex-grow w-full max-w-7xl mx-auto px-4 md:px-6 py-8">
+              {children}
+              <div className="mt-16 mb-8">
+                <AdBanner />
+              </div>
+            </main>
+            <Footer />
+          </FavoritesProvider>
         </ThemeProvider>
       </body>
     </html>

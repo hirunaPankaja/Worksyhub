@@ -54,14 +54,14 @@ const extractTextFromFile = async (file: File): Promise<{ text: string; warning?
       }
       else if (fileName.endsWith('.pdf')) {
         // PDF files - show informative message
-        resolve({ 
+        resolve({
           text: 'PDF file detected. For accurate text extraction from PDF files, please copy and paste the text content directly, or convert the PDF to a text file first. PDF text extraction requires additional libraries that are not available in this environment.',
           warning: 'PDF text extraction not available. Please use plain text files for accurate counting.'
         });
       }
       else if (fileName.endsWith('.docx') || fileName.endsWith('.doc')) {
         // Word documents - show informative message
-        resolve({ 
+        resolve({
           text: 'Word document detected. For accurate text extraction from Word documents, please copy and paste the text content directly, or save the document as a text file first. DOCX text extraction requires additional libraries that are not available in this environment.',
           warning: 'Word document extraction not available. Please use plain text files for accurate counting.'
         });
@@ -76,8 +76,8 @@ const extractTextFromFile = async (file: File): Promise<{ text: string; warning?
             .replace(/[{}\\]/g, ' ') // Remove braces and backslashes
             .replace(/\s+/g, ' ') // Normalize whitespace
             .trim();
-          
-          resolve({ 
+
+          resolve({
             text: text || 'No extractable text found in RTF file.',
             warning: text ? 'RTF formatting removed. Some content may be lost.' : 'No text content found in RTF file.'
           });
@@ -142,14 +142,14 @@ const analyzeText = (text: string) => {
   const paragraphCount = paragraphs.length;
 
   // Longest word
-  const longestWord = words.length > 0 ? 
+  const longestWord = words.length > 0 ?
     words.reduce((a, b) => a.length > b.length ? a : b) : '';
 
   // Advanced statistics
-  const avgWordLength = words.length > 0 ? 
+  const avgWordLength = words.length > 0 ?
     words.reduce((sum, word) => sum + word.length, 0) / words.length : 0;
 
-  const avgSentenceLength = sentenceCount > 0 ? 
+  const avgSentenceLength = sentenceCount > 0 ?
     wordCount / sentenceCount : 0;
 
   // Enhanced readability scoring
@@ -173,21 +173,21 @@ const analyzeText = (text: string) => {
 
 const calculateReadabilityScore = (avgWordLength: number, avgSentenceLength: number, wordCount: number): number => {
   if (wordCount === 0) return 0;
-  
+
   // Enhanced readability calculation
   let score = 100;
-  
+
   // Penalize long words more heavily
   score -= Math.min(avgWordLength * 2, 40);
-  
+
   // Penalize long sentences
   score -= Math.min(avgSentenceLength * 0.5, 30);
-  
+
   // Bonus for optimal word count range
   if (wordCount >= 200 && wordCount <= 1000) {
     score += 5;
   }
-  
+
   return Math.max(0, Math.min(100, score));
 };
 
@@ -230,7 +230,7 @@ export default function WordCounterPage() {
   // Text analysis effect
   useEffect(() => {
     const analysis = analyzeText(counterText);
-    
+
     setWordCount(analysis.wordCount);
     setCharCount(analysis.charCount);
     setCharCountNoSpaces(analysis.charCountNoSpaces);
@@ -290,19 +290,19 @@ export default function WordCounterPage() {
       const fileName = file.name.toLowerCase();
       const allowedExtensions = ['.txt', '.md', '.rtf'];
       const isAllowed = allowedExtensions.some(ext => fileName.endsWith(ext));
-      
+
       if (!isAllowed) {
         throw new Error(`Please upload .txt, .md, or .rtf files for accurate word counting. For PDF or Word documents, copy and paste the text content directly.`);
       }
 
       const { text, warning } = await extractTextFromFile(file);
-      
+
       if (!text || text.trim().length === 0) {
         throw new Error('No text content could be extracted from this file.');
       }
 
       setCounterText(text);
-      
+
       if (warning) {
         setUploadWarning(warning);
       }
@@ -362,22 +362,20 @@ export default function WordCounterPage() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setAutoSave(!autoSave)}
-              className={`p-2 rounded-lg transition-colors ${
-                autoSave 
-                  ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' 
+              className={`p-2 rounded-lg transition-colors ${autoSave
+                  ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
                   : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
-              }`}
+                }`}
               title={autoSave ? 'Auto-save enabled' : 'Auto-save disabled'}
             >
               {autoSave ? <CheckCircle2 className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
             </button>
             <button
               onClick={() => setShowWhitespace(!showWhitespace)}
-              className={`p-2 rounded-lg transition-colors ${
-                showWhitespace 
-                  ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' 
+              className={`p-2 rounded-lg transition-colors ${showWhitespace
+                  ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
                   : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
-              }`}
+                }`}
               title={showWhitespace ? 'Hide whitespace' : 'Show whitespace'}
             >
               {showWhitespace ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -438,11 +436,10 @@ export default function WordCounterPage() {
               />
               <label
                 htmlFor="file-upload"
-                className={`px-4 py-2 rounded-lg transition-colors flex items-center gap-2 cursor-pointer ${
-                  isLoading 
-                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                className={`px-4 py-2 rounded-lg transition-colors flex items-center gap-2 cursor-pointer ${isLoading
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                     : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
-                }`}
+                  }`}
               >
                 {isLoading ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -453,7 +450,7 @@ export default function WordCounterPage() {
               </label>
             </div>
           </div>
-          
+
           <div className="relative">
             <textarea
               value={showWhitespace ? counterText.replace(/ /g, '·').replace(/\t/g, '→ ').replace(/\n/g, '↵\n') : counterText}
@@ -463,7 +460,7 @@ export default function WordCounterPage() {
               placeholder="Type or paste your text here... Or upload .txt, .md, or .rtf files. For PDF or Word documents, copy and paste the text content directly. All statistics update in real-time as you type."
               disabled={isLoading}
             />
-            
+
             <div className="absolute top-4 right-4 flex gap-2">
               <button
                 onClick={copyToClipboard}
@@ -540,15 +537,14 @@ export default function WordCounterPage() {
                 </div>
               </div>
             </div>
-            
+
             <div>
               <h4 className="font-semibold text-card-foreground mb-3">Writing Goals</h4>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span>Blog Post:</span>
-                  <span className={`font-semibold ${
-                    wordCount >= 300 && wordCount <= 500 ? 'text-green-500' : 'text-orange-500'
-                  }`}>
+                  <span className={`font-semibold ${wordCount >= 300 && wordCount <= 500 ? 'text-green-500' : 'text-orange-500'
+                    }`}>
                     {wordCount >= 300 && wordCount <= 500 ? '✓ Optimal' : `${wordCount}/500`}
                   </span>
                 </div>
@@ -566,17 +562,16 @@ export default function WordCounterPage() {
                 </div>
               </div>
             </div>
-            
+
             <div>
               <h4 className="font-semibold text-card-foreground mb-3">Content Analysis</h4>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span>Readability:</span>
-                  <span className={`font-semibold ${
-                    textStats.readabilityScore >= 80 ? 'text-green-500' :
-                    textStats.readabilityScore >= 60 ? 'text-blue-500' :
-                    textStats.readabilityScore >= 40 ? 'text-orange-500' : 'text-red-500'
-                  }`}>
+                  <span className={`font-semibold ${textStats.readabilityScore >= 80 ? 'text-green-500' :
+                      textStats.readabilityScore >= 60 ? 'text-blue-500' :
+                        textStats.readabilityScore >= 40 ? 'text-orange-500' : 'text-red-500'
+                    }`}>
                     {textStats.readabilityScore}/100
                   </span>
                 </div>
@@ -628,22 +623,22 @@ export default function WordCounterPage() {
         </p>
         <div className="prose prose-xl max-w-none text-foreground">
           <p className="text-xl leading-relaxed mb-6">
-            Welcome to the most comprehensive <strong className="text-primary">word counter tool</strong> and 
-            professional <strong className="text-blue-600 dark:text-blue-400">character counter</strong> available online. 
-            Our advanced <strong className="text-purple-600 dark:text-purple-400">text analysis platform</strong> provides 
-            real-time counting of words, characters, sentences, paragraphs, and much more. Whether you're a 
-            <strong> student writing essays</strong>, a <strong>professional content creator</strong>, an 
-            <strong> SEO specialist optimizing web content</strong>, or a <strong>social media manager</strong> crafting 
-            perfect posts, our <strong>word count tool</strong> delivers precise, instant results for all your 
+            Welcome to the most comprehensive <strong className="text-primary">word counter tool</strong> and
+            professional <strong className="text-blue-600 dark:text-blue-400">character counter</strong> available online.
+            Our advanced <strong className="text-purple-600 dark:text-purple-400">text analysis platform</strong> provides
+            real-time counting of words, characters, sentences, paragraphs, and much more. Whether you're a
+            <strong> student writing essays</strong>, a <strong>professional content creator</strong>, an
+            <strong> SEO specialist optimizing web content</strong>, or a <strong>social media manager</strong> crafting
+            perfect posts, our <strong>word count tool</strong> delivers precise, instant results for all your
             <strong> writing needs</strong>.
           </p>
           <p className="text-xl leading-relaxed">
-            This free <strong>online word counter</strong> goes beyond basic counting to provide 
-            <strong> advanced writing analytics</strong> including reading time estimates, speaking time calculations, 
-            readability scores, and comprehensive text statistics. Our <strong>character count tool</strong> supports 
-            multiple counting methods and helps you meet specific platform requirements like 
-            <strong> Twitter's 280-character limit</strong> or <strong>Google's meta description guidelines</strong>. 
-            With features like auto-save, file upload, and detailed writing insights, this is the ultimate 
+            This free <strong>online word counter</strong> goes beyond basic counting to provide
+            <strong> advanced writing analytics</strong> including reading time estimates, speaking time calculations,
+            readability scores, and comprehensive text statistics. Our <strong>character count tool</strong> supports
+            multiple counting methods and helps you meet specific platform requirements like
+            <strong> Twitter's 280-character limit</strong> or <strong>Google's meta description guidelines</strong>.
+            With features like auto-save, file upload, and detailed writing insights, this is the ultimate
             <strong> writing assistant tool</strong> for professionals and students worldwide.
           </p>
         </div>
@@ -651,7 +646,7 @@ export default function WordCounterPage() {
 
       {/* --- Rich Content Sections --- */}
       <div className="space-y-8">
-        
+
         {/* --- How to Use Tutorial --- */}
         <div className="bg-card border rounded-2xl p-8">
           <h2 className="text-3xl font-bold text-card-foreground mb-6 flex items-center gap-3">
@@ -755,41 +750,41 @@ export default function WordCounterPage() {
             <div className="border-b border-border pb-6">
               <h3 className="text-xl font-semibold text-card-foreground mb-3">How accurate is the word counter?</h3>
               <p className="text-lg text-foreground">
-                Our <strong className="text-primary">word counter tool</strong> is extremely accurate and uses advanced 
-                algorithms to count words, characters, and other text metrics. It handles various text formats, 
-                punctuation, and special characters with precision, making it reliable for 
-                <strong> professional writing</strong>, <strong>academic work</strong>, and 
+                Our <strong className="text-primary">word counter tool</strong> is extremely accurate and uses advanced
+                algorithms to count words, characters, and other text metrics. It handles various text formats,
+                punctuation, and special characters with precision, making it reliable for
+                <strong> professional writing</strong>, <strong>academic work</strong>, and
                 <strong> content creation</strong>.
               </p>
             </div>
             <div className="border-b border-border pb-6">
               <h3 className="text-xl font-semibold text-card-foreground mb-3">What's the difference between character count with and without spaces?</h3>
               <p className="text-lg text-foreground">
-                <strong className="text-green-600 dark:text-green-400">Character count with spaces</strong> includes 
-                all characters in your text, including spaces, tabs, and line breaks. 
-                <strong className="text-blue-600 dark:text-blue-400"> Character count without spaces</strong> only 
-                counts visible characters, which is useful for platforms with strict character limits like 
+                <strong className="text-green-600 dark:text-green-400">Character count with spaces</strong> includes
+                all characters in your text, including spaces, tabs, and line breaks.
+                <strong className="text-blue-600 dark:text-blue-400"> Character count without spaces</strong> only
+                counts visible characters, which is useful for platforms with strict character limits like
                 <strong> Twitter</strong> and <strong>meta descriptions</strong>.
               </p>
             </div>
             <div className="border-b border-border pb-6">
               <h3 className="text-xl font-semibold text-card-foreground mb-3">How is reading time calculated?</h3>
               <p className="text-lg text-foreground">
-                <strong className="text-primary">Reading time</strong> is calculated based on an average reading speed 
-                of 200 words per minute. This is a standard metric used in content publishing and helps 
-                <strong> content creators</strong> and <strong>readers</strong> understand the time commitment 
+                <strong className="text-primary">Reading time</strong> is calculated based on an average reading speed
+                of 200 words per minute. This is a standard metric used in content publishing and helps
+                <strong> content creators</strong> and <strong>readers</strong> understand the time commitment
                 required for different pieces of content.
               </p>
             </div>
             <div>
               <h3 className="text-xl font-semibold text-card-foreground mb-3">Can I use this word counter for different languages?</h3>
               <p className="text-lg text-foreground">
-                Yes! Our <strong className="text-purple-600 dark:text-purple-400">word counter tool</strong> supports 
-                multiple languages including <strong className="text-green-600 dark:text-green-400">English</strong>, 
-                <strong className="text-blue-600 dark:text-blue-400"> Spanish</strong>, 
-                <strong className="text-orange-600 dark:text-orange-400"> French</strong>, 
-                <strong className="text-red-600 dark:text-red-400"> German</strong>, and many others. The character 
-                counting and basic word counting work across most languages, making it perfect for 
+                Yes! Our <strong className="text-purple-600 dark:text-purple-400">word counter tool</strong> supports
+                multiple languages including <strong className="text-green-600 dark:text-green-400">English</strong>,
+                <strong className="text-blue-600 dark:text-blue-400"> Spanish</strong>,
+                <strong className="text-orange-600 dark:text-orange-400"> French</strong>,
+                <strong className="text-red-600 dark:text-red-400"> German</strong>, and many others. The character
+                counting and basic word counting work across most languages, making it perfect for
                 <strong> international content creation</strong> and <strong>multilingual projects</strong>.
               </p>
             </div>
@@ -809,13 +804,13 @@ export default function WordCounterPage() {
             <FileText className="h-6 w-6 mx-auto mb-2 text-green-600 dark:text-green-400" />
             <div className="font-semibold text-card-foreground">QR Code Generator</div>
           </a>
-          <a href="/case-converter" className="p-4 rounded-xl bg-card hover:bg-muted transition-all transform hover:scale-105 border border-border shadow-sm">
+          <a href="/unit-converter" className="p-4 rounded-xl bg-card hover:bg-muted transition-all transform hover:scale-105 border border-border shadow-sm">
             <FileText className="h-6 w-6 mx-auto mb-2 text-blue-600 dark:text-blue-400" />
-            <div className="font-semibold text-card-foreground">Case Converter</div>
+            <div className="font-semibold text-card-foreground">Unit Converter</div>
           </a>
-          <a href="/barcode-generator" className="p-4 rounded-xl bg-card hover:bg-muted transition-all transform hover:scale-105 border border-border shadow-sm">
+          <a href="/bmi-calculator" className="p-4 rounded-xl bg-card hover:bg-muted transition-all transform hover:scale-105 border border-border shadow-sm">
             <FileText className="h-6 w-6 mx-auto mb-2 text-purple-600 dark:text-purple-400" />
-            <div className="font-semibold text-card-foreground">Barcode Generator</div>
+            <div className="font-semibold text-card-foreground">BMI Calculator</div>
           </a>
         </div>
       </div>

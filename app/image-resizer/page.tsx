@@ -204,7 +204,7 @@ export default function ImageResizerPage() {
 
       {/* --- Rich Content Section --- */}
       <div className="p-6 rounded-lg bg-muted/50 space-y-8">
-        
+
         {/* --- How to Use (Tutorial) --- */}
         <div className="bg-background border rounded-lg p-6">
           <h2 className="text-2xl font-bold mb-6 text-foreground flex items-center gap-2">
@@ -252,7 +252,7 @@ export default function ImageResizerPage() {
             </ul>
           </div>
         </div>
-        
+
         {/* --- Privacy --- */}
         <div className="bg-background border rounded-lg p-6">
           <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
@@ -270,14 +270,14 @@ export default function ImageResizerPage() {
       <div className="p-6 rounded-lg bg-primary/10 border border-primary/20">
         <h3 className="text-xl font-semibold mb-4 text-center">Need More Tools?</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-          <a href="/image-cropper" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
-            Image Cropper
+          <a href="/qr-code-generator" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
+            QR Code Generator
           </a>
-          <a href="/image-to-base64" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
-            Image to Base64
+          <a href="/unit-converter" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
+            Unit Converter
           </a>
-          <a href="/pdf-merger" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
-            PDF Merger
+          <a href="/word-counter" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
+            Word Counter
           </a>
           <a href="/" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
             All Tools
