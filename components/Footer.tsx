@@ -11,19 +11,18 @@ export function Footer() {
       { name: 'About Us', href: '/about' },
       { name: 'Privacy Policy', href: '/privacy-policy' },
       { name: 'Terms of Service', href: '/terms-of-service' },
-      { name: 'Contact', href: '/contact' },
+    ],
+    Calculators: [
+      { name: 'BMI Calculator', href: '/bmi-calculator' },
+      { name: 'Scientific', href: '/scientific-calculator' },
+      { name: 'Percentage', href: '/percentage-calculator' },
+      { name: 'EMI Calculator', href: '/emi-calculator' },
     ],
     Tools: [
-      { name: 'Calculators', href: '/calculators' },
-      { name: 'Converters', href: '/converters' },
-      { name: 'Generators', href: '/generators' },
-      { name: 'Developers', href: '/developers' },
-    ],
-    Trending: [
-      { name: 'BMI Calculator', href: '/bmi-calculator' },
-      { name: 'Youtube Thumbnail', href: '/youtube-thumbnail-downloader' },
+      { name: 'YouTube Thumbnail', href: '/youtube-thumbnail-downloader' },
       { name: 'QR Code Generator', href: '/qr-code-generator' },
       { name: 'Password Gen', href: '/password-generator' },
+      { name: 'Word Counter', href: '/word-counter' },
     ]
   };
 

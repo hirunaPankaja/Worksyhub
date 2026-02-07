@@ -42,16 +42,16 @@ export default function BasicCalculatorPage() {
     } else {
       setDisplay(display + num);
     }
-    
+
     if (operation && waitingForNewValue) {
-        setExpression(previousValue + ' ' + operation + ' ' + (num === '.' ? '0.' : num));
-      } else if (!operation) {
-        // Handle expression building from the start
-        const newExpression = (display === '0' && num !== '.') ? num : (waitingForNewValue ? num : display + num);
-        setExpression(newExpression);
-      } else {
-        setExpression(expression + num);
-      }
+      setExpression(previousValue + ' ' + operation + ' ' + (num === '.' ? '0.' : num));
+    } else if (!operation) {
+      // Handle expression building from the start
+      const newExpression = (display === '0' && num !== '.') ? num : (waitingForNewValue ? num : display + num);
+      setExpression(newExpression);
+    } else {
+      setExpression(expression + num);
+    }
   };
 
   const handleOperationClick = (op: string) => {
@@ -90,7 +90,7 @@ export default function BasicCalculatorPage() {
       case '+': return previousValue + current;
       case '-': return previousValue - current;
       case '*': return previousValue * current;
-      case '/': 
+      case '/':
         if (current === 0) {
           return 'Error';
         }
@@ -109,7 +109,7 @@ export default function BasicCalculatorPage() {
       setDisplay('Error');
       return;
     }
-    
+
     setExpression(previousValue + ' ' + operation + ' ' + display + ' = ' + result);
     setDisplay(String(result));
     setPreviousValue(null);
@@ -183,7 +183,7 @@ export default function BasicCalculatorPage() {
               {expression}
             </div>
           )}
-          
+
           <div className="mb-4 p-4 text-right text-3xl font-bold bg-muted rounded-lg break-all min-h-[68px] flex items-center justify-end">
             {display}
           </div>
@@ -203,9 +203,8 @@ export default function BasicCalculatorPage() {
               <button
                 key={btn}
                 onClick={() => btn === '*' ? handleOperationClick('*') : handleNumberClick(btn)}
-                className={`p-4 text-lg font-semibold rounded-lg ${
-                  btn === '*' ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'
-                }`}
+                className={`p-4 text-lg font-semibold rounded-lg ${btn === '*' ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'
+                  }`}
               >
                 {btn}
               </button>
@@ -215,9 +214,8 @@ export default function BasicCalculatorPage() {
               <button
                 key={btn}
                 onClick={() => btn === '-' ? handleOperationClick('-') : handleNumberClick(btn)}
-                className={`p-4 text-lg font-semibold rounded-lg ${
-                  btn === '-' ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'
-                }`}
+                className={`p-4 text-lg font-semibold rounded-lg ${btn === '-' ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'
+                  }`}
               >
                 {btn}
               </button>
@@ -227,9 +225,8 @@ export default function BasicCalculatorPage() {
               <button
                 key={btn}
                 onClick={() => btn === '+' ? handleOperationClick('+') : handleNumberClick(btn)}
-                className={`p-4 text-lg font-semibold rounded-lg ${
-                  btn === '+' ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'
-                }`}
+                className={`p-4 text-lg font-semibold rounded-lg ${btn === '+' ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'
+                  }`}
               >
                 {btn}
               </button>
@@ -259,14 +256,14 @@ export default function BasicCalculatorPage() {
           <h3 className="text-2xl font-bold mb-6 text-foreground">
             {tutorials.title}
           </h3>
-          
+
           <div className="space-y-6">
             {tutorials.sections.map((section: { title: string, content: string[] }, sectionIndex: number) => (
               <div key={sectionIndex} className="space-y-4">
                 <h4 className="text-xl font-semibold text-foreground border-b pb-2">
                   {section.title}
                 </h4>
-                
+
                 <div className="prose prose-lg max-w-none text-foreground">
                   {section.content.map((line: string, lineIndex: number) => (
                     <div key={lineIndex} className="mb-3">
@@ -288,23 +285,175 @@ export default function BasicCalculatorPage() {
         </div>
       </div>
 
-      {/* --- Need More Tools? Section --- */}
-      <div className="p-6 rounded-lg bg-primary/10 border border-primary/20">
-        <h3 className="text-xl font-semibold mb-4 text-center">Need More Tools?</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-          <a href="/scientific-calculator" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
-            Scientific Calculator
-          </a>
-          <a href="/bmi-calculator" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
-            BMI Calculator
-          </a>
-          <a href="/gpa-calculator" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
-            GPA Calculator
-          </a>
-          <a href="/discount-calculator" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
-            Discount Calculator
-          </a>
-        </div>
+      {/* Comprehensive SEO Content */}
+      <div className="space-y-10 border-t pt-8 mt-8">
+
+        {/* What is a Basic Calculator */}
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold">Free Online Calculator for Quick Math</h2>
+          <div className="prose prose-lg max-w-none text-muted-foreground">
+            <p className="leading-relaxed">
+              A <strong>basic calculator</strong> is an essential tool for performing everyday arithmetic operations including addition, subtraction, multiplication, and division. Our <strong>free online calculator</strong> works instantly in your browser, making it perfect for quick calculations at home, work, or school.
+            </p>
+            <p className="leading-relaxed">
+              Whether you're balancing a budget, calculating tips, checking homework, or doing quick math at work, this calculator provides instant, accurate results without any downloads or installations. All calculations happen directly in your browser for complete privacy.
+            </p>
+          </div>
+        </section>
+
+        {/* Features */}
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold">Calculator Features</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="flex gap-4">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <span className="text-xl">⌨️</span>
+              </div>
+              <div>
+                <h3 className="font-semibold">Keyboard Support</h3>
+                <p className="text-sm text-muted-foreground">Use your keyboard for faster input. Numbers, operators (+, -, *, /), Enter for equals, and Escape to clear all work seamlessly.</p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <span className="text-xl">📝</span>
+              </div>
+              <div>
+                <h3 className="font-semibold">Expression History</h3>
+                <p className="text-sm text-muted-foreground">See your entire calculation displayed above the result, making it easy to verify your work and catch errors.</p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <span className="text-xl">⚠️</span>
+              </div>
+              <div>
+                <h3 className="font-semibold">Error Handling</h3>
+                <p className="text-sm text-muted-foreground">Clear error messages for invalid operations like division by zero help you understand what went wrong.</p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <span className="text-xl">🔢</span>
+              </div>
+              <div>
+                <h3 className="font-semibold">Decimal Support</h3>
+                <p className="text-sm text-muted-foreground">Perform calculations with decimal numbers for precise results. The calculator handles both whole numbers and decimals.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Use Cases */}
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold">Everyday Uses for a Calculator</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="p-5 rounded-xl border hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-3">🛒</div>
+              <h3 className="font-bold text-lg mb-2">Shopping</h3>
+              <p className="text-sm text-muted-foreground">Add up prices, calculate totals, split bills, and determine if you're staying within budget while shopping online or in stores.</p>
+            </div>
+            <div className="p-5 rounded-xl border hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-3">💼</div>
+              <h3 className="font-bold text-lg mb-2">Work</h3>
+              <p className="text-sm text-muted-foreground">Quick calculations for invoices, expense reports, time tracking, and everyday business math without opening a spreadsheet.</p>
+            </div>
+            <div className="p-5 rounded-xl border hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-3">📚</div>
+              <h3 className="font-bold text-lg mb-2">Homework</h3>
+              <p className="text-sm text-muted-foreground">Check your math homework answers, practice arithmetic, and verify calculations for school assignments quickly.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors">
+              <summary className="font-medium flex items-center justify-between">
+                Can I use my keyboard with this calculator?
+                <span className="group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <p className="mt-4 text-muted-foreground">
+                Yes! The calculator fully supports keyboard input. Use number keys (0-9) for digits, +, -, *, / for operations, Enter or = for equals, Escape or Delete to clear, and Backspace to delete the last digit.
+              </p>
+            </details>
+
+            <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors">
+              <summary className="font-medium flex items-center justify-between">
+                What happens if I divide by zero?
+                <span className="group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <p className="mt-4 text-muted-foreground">
+                Division by zero is mathematically undefined. Our calculator will display "Error" and clear the calculation, allowing you to start fresh with a valid operation.
+              </p>
+            </details>
+
+            <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors">
+              <summary className="font-medium flex items-center justify-between">
+                How do I chain multiple operations?
+                <span className="group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <p className="mt-4 text-muted-foreground">
+                Simply keep entering operations after each number. For example: 5 + 3 * 2 - 4 =. The calculator processes operations from left to right as you enter them, so intermediate results are shown after each operation.
+              </p>
+            </details>
+
+            <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors">
+              <summary className="font-medium flex items-center justify-between">
+                Is this calculator free to use?
+                <span className="group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <p className="mt-4 text-muted-foreground">
+                Yes, our online calculator is 100% free with no hidden costs, subscriptions, or advertisements. Use it as many times as you need without any limitations.
+              </p>
+            </details>
+
+            <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors">
+              <summary className="font-medium flex items-center justify-between">
+                Does the calculator store my calculations?
+                <span className="group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <p className="mt-4 text-muted-foreground">
+                No, all calculations happen entirely in your browser. Nothing is sent to our servers or stored anywhere. Your privacy is completely protected.
+              </p>
+            </details>
+
+            <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors">
+              <summary className="font-medium flex items-center justify-between">
+                What's the maximum number this calculator can handle?
+                <span className="group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <p className="mt-4 text-muted-foreground">
+                The calculator uses JavaScript's number system which can accurately handle numbers up to about 9 quadrillion (9,007,199,254,740,992). For most everyday calculations, this is more than sufficient.
+              </p>
+            </details>
+          </div>
+        </section>
+
+        {/* Related Tools */}
+        <section className="p-6 rounded-xl bg-primary/5 border border-primary/20">
+          <h3 className="text-xl font-bold mb-4 text-center">More Calculator Tools</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <a href="/scientific-calculator" className="p-4 rounded-lg bg-background hover:bg-muted transition-colors border">
+              <div className="font-medium">Scientific Calculator</div>
+              <div className="text-xs text-muted-foreground">Advanced math</div>
+            </a>
+            <a href="/percentage-calculator" className="p-4 rounded-lg bg-background hover:bg-muted transition-colors border">
+              <div className="font-medium">Percentage Calculator</div>
+              <div className="text-xs text-muted-foreground">Calculate %</div>
+            </a>
+            <a href="/discount-calculator" className="p-4 rounded-lg bg-background hover:bg-muted transition-colors border">
+              <div className="font-medium">Discount Calculator</div>
+              <div className="text-xs text-muted-foreground">Find savings</div>
+            </a>
+            <a href="/emi-calculator" className="p-4 rounded-lg bg-background hover:bg-muted transition-colors border">
+              <div className="font-medium">EMI Calculator</div>
+              <div className="text-xs text-muted-foreground">Loan payments</div>
+            </a>
+          </div>
+        </section>
       </div>
     </div>
   );

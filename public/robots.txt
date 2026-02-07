@@ -1,7 +1,9 @@
-# public/robots.txt
-
+# *
 User-agent: *
 Allow: /
-Disallow: /api/
 
+# Host
+Host: https://worksyhub.online
+
+# Sitemaps
 Sitemap: https://worksyhub.online/sitemap.xml

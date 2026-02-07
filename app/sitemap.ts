@@ -44,6 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/word-counter',             // 80K+ monthly searches
     '/password-generator',       // 90K+ monthly searches
     '/qr-code-generator',        // 150K+ monthly searches
+    '/youtube-thumbnail-downloader', // 100K+ monthly searches
     '/image-resizer',            // 60K+ monthly searches
     '/unit-converter',           // 120K+ monthly searches (NEW - consolidated)
     '/emi-calculator',           // 80K+ monthly searches

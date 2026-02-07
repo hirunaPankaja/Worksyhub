@@ -304,7 +304,7 @@ export default function ScientificCalculatorPage() {
             <button onClick={() => handleScientificInput('/')} className="p-3 text-lg font-semibold bg-primary text-primary-foreground rounded-lg">
               ÷
             </button>
-            
+
             {['7', '8', '9'].map((btn) => (
               <button
                 key={btn}
@@ -330,7 +330,7 @@ export default function ScientificCalculatorPage() {
             <button onClick={() => handleScientificInput('-')} className="p-3 text-lg font-semibold bg-primary text-primary-foreground rounded-lg">
               -
             </button>
-            
+
             {['1', '2', '3'].map((btn) => (
               <button
                 key={btn}
@@ -368,14 +368,14 @@ export default function ScientificCalculatorPage() {
           <h3 className="text-2xl font-bold mb-6 text-foreground">
             {tutorials.title}
           </h3>
-          
+
           <div className="space-y-6">
             {tutorials.sections.map((section: { title: string, content: string[] }, sectionIndex: number) => (
               <div key={sectionIndex} className="space-y-4">
                 <h4 className="text-xl font-semibold text-foreground border-b pb-2">
                   {section.title}
                 </h4>
-                
+
                 <div className="prose prose-lg max-w-none text-foreground">
                   {section.content.map((line: string, lineIndex: number) => (
                     <div key={lineIndex} className="mb-3">
@@ -397,23 +397,175 @@ export default function ScientificCalculatorPage() {
         </div>
       </div>
 
-      {/* --- Need More Tools? Section --- */}
-      <div className="p-6 rounded-lg bg-primary/10 border border-primary/20">
-        <h3 className="text-xl font-semibold mb-4 text-center">Need More Tools?</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-          <a href="/basic-calculator" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
-            Basic Calculator
-          </a>
-          <a href="/bmi-calculator" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
-            BMI Calculator
-          </a>
-          <a href="/gpa-calculator" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
-            GPA Calculator
-          </a>
-          <a href="/discount-calculator" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
-            Discount Calculator
-          </a>
-        </div>
+      {/* Comprehensive SEO Content */}
+      <div className="space-y-10 border-t pt-8 mt-8">
+
+        {/* What is a Scientific Calculator */}
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold">What is a Scientific Calculator? Complete Guide</h2>
+          <div className="prose prose-lg max-w-none text-muted-foreground">
+            <p className="leading-relaxed">
+              A <strong>scientific calculator</strong> is an advanced calculating device that can perform mathematical operations beyond basic arithmetic. Unlike simple calculators, scientific calculators include functions for trigonometry, logarithms, exponents, factorials, and mathematical constants like π (pi) and e (Euler's number).
+            </p>
+            <p className="leading-relaxed">
+              Our <strong>free online scientific calculator</strong> provides all the functionality of physical scientific calculators without needing to purchase one. Whether you're a student working on algebra, a professional engineer, or anyone needing advanced math capabilities, this calculator works directly in your browser with no downloads required.
+            </p>
+          </div>
+        </section>
+
+        {/* Functions Explained */}
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold">Scientific Calculator Functions Explained</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="p-5 rounded-xl border bg-blue-50/50 dark:bg-blue-900/20">
+              <h3 className="font-bold text-lg mb-3 text-blue-700 dark:text-blue-300">Trigonometric Functions</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><strong>sin(x)</strong> – Calculates the sine of angle x in degrees</li>
+                <li><strong>cos(x)</strong> – Calculates the cosine of angle x in degrees</li>
+                <li><strong>tan(x)</strong> – Calculates the tangent of angle x in degrees</li>
+              </ul>
+              <p className="mt-3 text-xs text-muted-foreground">Example: sin(30) = 0.5, cos(60) = 0.5</p>
+            </div>
+            <div className="p-5 rounded-xl border bg-green-50/50 dark:bg-green-900/20">
+              <h3 className="font-bold text-lg mb-3 text-green-700 dark:text-green-300">Logarithmic Functions</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><strong>log(x)</strong> – Base-10 logarithm (common log)</li>
+                <li><strong>ln(x)</strong> – Natural logarithm (base e)</li>
+                <li><strong>e^x</strong> – Exponential function</li>
+              </ul>
+              <p className="mt-3 text-xs text-muted-foreground">Example: log(100) = 2, ln(e) = 1</p>
+            </div>
+            <div className="p-5 rounded-xl border bg-purple-50/50 dark:bg-purple-900/20">
+              <h3 className="font-bold text-lg mb-3 text-purple-700 dark:text-purple-300">Power & Root Functions</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><strong>x²</strong> – Square of a number</li>
+                <li><strong>x³</strong> – Cube of a number</li>
+                <li><strong>√x</strong> – Square root</li>
+              </ul>
+              <p className="mt-3 text-xs text-muted-foreground">Example: 5² = 25, √16 = 4</p>
+            </div>
+            <div className="p-5 rounded-xl border bg-orange-50/50 dark:bg-orange-900/20">
+              <h3 className="font-bold text-lg mb-3 text-orange-700 dark:text-orange-300">Special Functions</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><strong>x!</strong> – Factorial (x × (x-1) × ... × 1)</li>
+                <li><strong>|x|</strong> – Absolute value</li>
+                <li><strong>π, e</strong> – Mathematical constants</li>
+              </ul>
+              <p className="mt-3 text-xs text-muted-foreground">Example: 5! = 120, π ≈ 3.14159</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Use Cases */}
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold">Who Uses Scientific Calculators?</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="p-5 rounded-xl border hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-3">🎓</div>
+              <h3 className="font-bold text-lg mb-2">Students</h3>
+              <p className="text-sm text-muted-foreground">From algebra and geometry to calculus and physics, students use scientific calculators for homework, tests, and understanding mathematical concepts.</p>
+            </div>
+            <div className="p-5 rounded-xl border hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-3">⚙️</div>
+              <h3 className="font-bold text-lg mb-2">Engineers</h3>
+              <p className="text-sm text-muted-foreground">Mechanical, electrical, and civil engineers rely on trigonometric and logarithmic functions for design calculations, stress analysis, and signal processing.</p>
+            </div>
+            <div className="p-5 rounded-xl border hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-3">🔬</div>
+              <h3 className="font-bold text-lg mb-2">Scientists</h3>
+              <p className="text-sm text-muted-foreground">Researchers use scientific calculators for data analysis, statistical calculations, and complex mathematical models in physics, chemistry, and biology.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors">
+              <summary className="font-medium flex items-center justify-between">
+                What's the difference between log and ln?
+                <span className="group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <p className="mt-4 text-muted-foreground">
+                <strong>log</strong> (common logarithm) uses base 10, while <strong>ln</strong> (natural logarithm) uses base e (approximately 2.718). Log is often used in engineering and science for orders of magnitude, while ln is common in calculus and growth/decay problems.
+              </p>
+            </details>
+
+            <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors">
+              <summary className="font-medium flex items-center justify-between">
+                Are the trigonometric functions in degrees or radians?
+                <span className="group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <p className="mt-4 text-muted-foreground">
+                Our calculator uses <strong>degrees</strong> for trigonometric functions (sin, cos, tan). This is the most common unit for everyday calculations. To convert radians to degrees, multiply by 180/π.
+              </p>
+            </details>
+
+            <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors">
+              <summary className="font-medium flex items-center justify-between">
+                What is factorial (x!) used for?
+                <span className="group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <p className="mt-4 text-muted-foreground">
+                Factorial is used in probability, combinatorics, and statistics. It calculates the number of ways to arrange items. For example, 5! = 5×4×3×2×1 = 120 represents the number of ways to arrange 5 different objects.
+              </p>
+            </details>
+
+            <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors">
+              <summary className="font-medium flex items-center justify-between">
+                How do I use the memory functions?
+                <span className="group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <p className="mt-4 text-muted-foreground">
+                <strong>M+</strong> adds the current value to memory, <strong>MR</strong> recalls the stored value, and <strong>MC</strong> clears the memory. Use these to store intermediate results in complex calculations.
+              </p>
+            </details>
+
+            <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors">
+              <summary className="font-medium flex items-center justify-between">
+                Can I use keyboard shortcuts?
+                <span className="group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <p className="mt-4 text-muted-foreground">
+                Yes! Use Alt+S for sine, Alt+C for cosine, Alt+T for tangent, Alt+L for log, Alt+N for natural log, Alt+R for square root, and Alt+P for π. Numbers and basic operators work directly from your keyboard.
+              </p>
+            </details>
+
+            <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors">
+              <summary className="font-medium flex items-center justify-between">
+                Is this calculator accurate enough for professional use?
+                <span className="group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <p className="mt-4 text-muted-foreground">
+                Our calculator uses JavaScript's built-in Math functions which provide double-precision floating-point accuracy (about 15-17 significant digits). This is suitable for most educational and professional calculations.
+              </p>
+            </details>
+          </div>
+        </section>
+
+        {/* Related Tools */}
+        <section className="p-6 rounded-xl bg-primary/5 border border-primary/20">
+          <h3 className="text-xl font-bold mb-4 text-center">Related Calculator Tools</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <a href="/basic-calculator" className="p-4 rounded-lg bg-background hover:bg-muted transition-colors border">
+              <div className="font-medium">Basic Calculator</div>
+              <div className="text-xs text-muted-foreground">Simple math</div>
+            </a>
+            <a href="/percentage-calculator" className="p-4 rounded-lg bg-background hover:bg-muted transition-colors border">
+              <div className="font-medium">Percentage Calculator</div>
+              <div className="text-xs text-muted-foreground">Calculate %</div>
+            </a>
+            <a href="/bmi-calculator" className="p-4 rounded-lg bg-background hover:bg-muted transition-colors border">
+              <div className="font-medium">BMI Calculator</div>
+              <div className="text-xs text-muted-foreground">Health check</div>
+            </a>
+            <a href="/unit-converter" className="p-4 rounded-lg bg-background hover:bg-muted transition-colors border">
+              <div className="font-medium">Unit Converter</div>
+              <div className="text-xs text-muted-foreground">Convert units</div>
+            </a>
+          </div>
+        </section>
       </div>
     </div>
   );
