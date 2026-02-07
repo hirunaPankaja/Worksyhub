@@ -17,7 +17,7 @@ import {
 
 export default function PasswordGeneratorPage() {
   const [activeTab, setActiveTab] = useState('random');
-  
+
   // --- State for Random Password ---
   const [password, setPassword] = useState('');
   const [passwordLength, setPasswordLength] = useState(16);
@@ -25,7 +25,7 @@ export default function PasswordGeneratorPage() {
   const [includeNumbers, setIncludeNumbers] = useState(true);
   const [includeSymbols, setIncludeSymbols] = useState(true);
   const [copiedPass, setCopiedPass] = useState(false);
-  
+
   // --- State for Memorable Password ---
   const [memorableText, setMemorableText] = useState('i love my dog');
   const [memorablePassword, setMemorablePassword] = useState('');
@@ -35,7 +35,7 @@ export default function PasswordGeneratorPage() {
     symbols: true,
   });
   const [copiedMem, setCopiedMem] = useState(false);
-  
+
   // --- Tabs Definition ---
   const tabs = [
     { id: 'random', label: 'Random Password', icon: KeyRound },
@@ -46,7 +46,7 @@ export default function PasswordGeneratorPage() {
   useEffect(() => {
     generatePassword();
   }, [passwordLength, includeUppercase, includeNumbers, includeSymbols]);
-  
+
   useEffect(() => {
     generateMemorablePassword();
   }, [memorableText, memOptions]);
@@ -69,10 +69,10 @@ export default function PasswordGeneratorPage() {
     if (includeUppercase) charset += upper;
     if (includeNumbers) charset += numbers;
     if (includeSymbols) charset += symbols;
-    
+
     if (charset === '') {
-        setPassword('Select at least one option');
-        return;
+      setPassword('Select at least one option');
+      return;
     }
 
     let newPassword = '';
@@ -82,13 +82,13 @@ export default function PasswordGeneratorPage() {
     setPassword(newPassword);
     setCopiedPass(false);
   };
-  
+
   const generateMemorablePassword = () => {
     if (memorableText.trim() === '') {
       setMemorablePassword('');
       return;
     }
-    
+
     const { capitalize, numbers, symbols } = memOptions;
     const leetMapNumbers: { [key: string]: string } = { 'a': '4', 'e': '3', 'o': '0', 's': '5', 'l': '1', 't': '7' };
     const leetMapSymbols: { [key: string]: string } = { 'a': '@', 'i': '!', 's': '$', 'c': '(', 'g': '9' };
@@ -108,28 +108,28 @@ export default function PasswordGeneratorPage() {
         } else if (symbols && leetMapSymbols[c] && Math.random() < 0.5) {
           c = leetMapSymbols[c];
         }
-        
+
         if (capitalize && Math.random() < 0.5) {
           c = c.toUpperCase();
         }
         transformedWord += c;
       }
       newPass += transformedWord;
-      
+
       // Add a separator between words
       if (index < keywords.length - 1) {
-         if (symbols || numbers) {
+        if (symbols || numbers) {
           newPass += spaceChars[Math.floor(Math.random() * spaceChars.length)];
         } else {
           newPass += '-';
         }
       }
     });
-    
+
     setMemorablePassword(newPass);
     setCopiedMem(false);
   };
-  
+
   const tutorials = {
     random: {
       title: 'Random Password Guide',
@@ -186,11 +186,10 @@ export default function PasswordGeneratorPage() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
-              activeTab === tab.id
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${activeTab === tab.id
                 ? 'bg-primary text-primary-foreground'
                 : 'bg-muted text-muted-foreground hover:bg-muted/80'
-            }`}
+              }`}
           >
             <tab.icon className="h-4 w-4" />
             {tab.label}
@@ -314,13 +313,13 @@ export default function PasswordGeneratorPage() {
                 className="w-full p-3 rounded-lg border bg-background"
               />
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <label className="flex items-center gap-2 p-3 rounded-lg bg-background border cursor-pointer">
                 <input
                   type="checkbox"
                   checked={memOptions.capitalize}
-                  onChange={(e) => setMemOptions(prev => ({...prev, capitalize: e.target.checked}))}
+                  onChange={(e) => setMemOptions(prev => ({ ...prev, capitalize: e.target.checked }))}
                   className="w-4 h-4 text-primary"
                 />
                 Capitalize (a {'>'} A)
@@ -329,7 +328,7 @@ export default function PasswordGeneratorPage() {
                 <input
                   type="checkbox"
                   checked={memOptions.numbers}
-                  onChange={(e) => setMemOptions(prev => ({...prev, numbers: e.target.checked}))}
+                  onChange={(e) => setMemOptions(prev => ({ ...prev, numbers: e.target.checked }))}
                   className="w-4 h-4 text-primary"
                 />
                 Numbers (e {'>'} 3)
@@ -338,7 +337,7 @@ export default function PasswordGeneratorPage() {
                 <input
                   type="checkbox"
                   checked={memOptions.symbols}
-                  onChange={(e) => setMemOptions(prev => ({...prev, symbols: e.target.checked}))}
+                  onChange={(e) => setMemOptions(prev => ({ ...prev, symbols: e.target.checked }))}
                   className="w-4 h-4 text-primary"
                 />
                 Symbols (s {'>'} $)
@@ -357,7 +356,7 @@ export default function PasswordGeneratorPage() {
 
       {/* --- NEW: Rich Content Section --- */}
       <div className="p-6 rounded-lg bg-muted/50 space-y-8">
-        
+
         {/* --- How to Use (Tutorial) --- */}
         <div className="bg-background border rounded-lg p-6">
           <h2 className="text-2xl font-bold mb-6 text-foreground flex items-center gap-2">
@@ -419,7 +418,7 @@ export default function PasswordGeneratorPage() {
             </ul>
           </div>
         </div>
-        
+
         {/* --- Random vs. Memorable Table --- */}
         <div className="bg-background border rounded-lg p-6">
           <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
@@ -464,21 +463,114 @@ export default function PasswordGeneratorPage() {
 
       </div>
 
-      {/* --- Need More Tools? Section --- */}
-      <div className="p-6 rounded-lg bg-primary/10 border border-primary/20">
-        <h3 className="text-xl font-semibold mb-4 text-center">Need More Tools?</h3>
+      {/* Comprehensive FAQs */}
+      <div className="p-6 rounded-lg bg-muted/50 space-y-6">
+        <h2 className="text-2xl font-bold flex items-center gap-2">
+          <Shield className="h-6 w-6 text-primary" />
+          Frequently Asked Questions About Password Security
+        </h2>
+        <div className="space-y-3">
+          <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors bg-background">
+            <summary className="font-medium flex items-center justify-between">
+              How long should my password be?
+              <span className="group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p className="mt-4 text-muted-foreground">
+              Security experts recommend passwords of at least 12-16 characters. Longer passwords are exponentially harder to crack. A 16-character password is billions of times more secure than an 8-character password. For critical accounts like banking or email, consider 20+ characters.
+            </p>
+          </details>
+
+          <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors bg-background">
+            <summary className="font-medium flex items-center justify-between">
+              Is this password generator safe to use?
+              <span className="group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p className="mt-4 text-muted-foreground">
+              Yes! Our password generator runs entirely in your browser using client-side JavaScript. Your passwords are never sent to our servers or stored anywhere. We use cryptographically secure random number generation to ensure maximum randomness and security.
+            </p>
+          </details>
+
+          <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors bg-background">
+            <summary className="font-medium flex items-center justify-between">
+              Should I use a password manager?
+              <span className="group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p className="mt-4 text-muted-foreground">
+              Absolutely! Password managers are essential for maintaining security. They allow you to use unique, complex passwords for every account without memorizing them. Popular options include Bitwarden, 1Password, and LastPass. Use our random password generator to create passwords, then store them in your password manager.
+            </p>
+          </details>
+
+          <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors bg-background">
+            <summary className="font-medium flex items-center justify-between">
+              What makes a password secure?
+              <span className="group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p className="mt-4 text-muted-foreground">
+              A secure password has four key qualities: length (12+ characters), complexity (mix of uppercase, lowercase, numbers, and symbols), uniqueness (never reused across sites), and randomness (no dictionary words or personal information). Our generator creates passwords that meet all these criteria.
+            </p>
+          </details>
+
+          <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors bg-background">
+            <summary className="font-medium flex items-center justify-between">
+              How often should I change my passwords?
+              <span className="group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p className="mt-4 text-muted-foreground">
+              Current security advice suggests changing passwords only when there's a breach or suspicious activity, rather than on a fixed schedule. Forced frequent changes often lead to weaker passwords. However, always change passwords immediately if a service you use reports a data breach.
+            </p>
+          </details>
+
+          <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors bg-background">
+            <summary className="font-medium flex items-center justify-between">
+              What is two-factor authentication (2FA)?
+              <span className="group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p className="mt-4 text-muted-foreground">
+              Two-factor authentication adds an extra layer of security by requiring something you know (password) plus something you have (phone, hardware key). Even if someone steals your password, they can't access your account without the second factor. Enable 2FA on all important accounts.
+            </p>
+          </details>
+
+          <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors bg-background">
+            <summary className="font-medium flex items-center justify-between">
+              What are the most common password mistakes?
+              <span className="group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p className="mt-4 text-muted-foreground">
+              Common mistakes include: using personal info (names, birthdays), using dictionary words, reusing passwords across sites, using keyboard patterns (qwerty, 123456), making passwords too short, and writing passwords on sticky notes. Our generator helps you avoid all these pitfalls.
+            </p>
+          </details>
+
+          <details className="group border rounded-lg p-4 cursor-pointer hover:bg-muted/30 transition-colors bg-background">
+            <summary className="font-medium flex items-center justify-between">
+              How do hackers crack passwords?
+              <span className="group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p className="mt-4 text-muted-foreground">
+              Hackers use several methods: brute force (trying every combination), dictionary attacks (trying common words), credential stuffing (using leaked passwords from other breaches), phishing (tricking you into revealing passwords), and social engineering. Strong, unique passwords protect against most of these attacks.
+            </p>
+          </details>
+        </div>
+      </div>
+
+      {/* Related Tools */}
+      <div className="p-6 rounded-xl bg-primary/5 border border-primary/20">
+        <h3 className="text-xl font-bold mb-4 text-center">Related Security & Utility Tools</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-          <a href="/qr-code-generator" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
-            QR Code Generator
+          <a href="/qr-code-generator" className="p-4 rounded-lg bg-background hover:bg-muted transition-colors border">
+            <div className="font-medium">QR Code Generator</div>
+            <div className="text-xs text-muted-foreground">Create QR codes</div>
           </a>
-          <a href="/case-converter" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
-            Case Converter
+          <a href="/word-counter" className="p-4 rounded-lg bg-background hover:bg-muted transition-colors border">
+            <div className="font-medium">Word Counter</div>
+            <div className="text-xs text-muted-foreground">Analyze text</div>
           </a>
-          <a href="/word-counter" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
-            Word Counter
+          <a href="/unit-converter" className="p-4 rounded-lg bg-background hover:bg-muted transition-colors border">
+            <div className="font-medium">Unit Converter</div>
+            <div className="text-xs text-muted-foreground">Convert units</div>
           </a>
-          <a href="/text-tools" className="p-3 rounded-lg bg-background hover:bg-muted transition-colors">
-            Text & Coding Tools
+          <a href="/age-calculator" className="p-4 rounded-lg bg-background hover:bg-muted transition-colors border">
+            <div className="font-medium">Age Calculator</div>
+            <div className="text-xs text-muted-foreground">Calculate age</div>
           </a>
         </div>
       </div>
