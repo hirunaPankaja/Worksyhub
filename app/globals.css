@@ -187,14 +187,27 @@ input[type="text"],
 input[type="number"],
 input[type="email"],
 input[type="password"],
-select,
-textarea {
+select {
   display: flex;
   height: 2.75rem;
   width: 100%;
   border-radius: var(--radius-md);
   border: 1px solid var(--color-input);
   background-color: var(--color-background);
+  color: var(--color-foreground);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+textarea {
+  display: flex;
+  min-height: 2.75rem;
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-input);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
   padding: 0.5rem 0.75rem;
   font-size: 0.875rem;
   transition: all 0.2s;
@@ -254,6 +267,42 @@ button:active {
 
 .glass-card:hover {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Subtle gradient utilities */
+.gradient-hero {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(168, 85, 247, 0.05) 50%, rgba(236, 72, 153, 0.04) 100%);
+}
+
+.dark .gradient-hero {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(168, 85, 247, 0.1) 50%, rgba(236, 72, 153, 0.08) 100%);
+}
+
+.gradient-card {
+  background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--card)) 60%, rgba(99, 102, 241, 0.03) 100%);
+  border: 1px solid var(--color-border);
+  transition: all 0.3s;
+}
+
+.gradient-card:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 20px -4px rgba(99, 102, 241, 0.12);
+}
+
+.dark .gradient-card {
+  background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--card)) 60%, rgba(99, 102, 241, 0.06) 100%);
+}
+
+.dark .gradient-card:hover {
+  border-color: rgba(129, 140, 248, 0.3);
+  box-shadow: 0 4px 20px -4px rgba(99, 102, 241, 0.2);
+}
+
+.gradient-accent-text {
+  background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Custom Scrollbar - kept as raw CSS */

@@ -1,11 +1,9 @@
-// src/app/sitemap.ts
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://worksyhub.online';
   const currentDate = new Date();
 
-  // STATIC PAGES
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
@@ -33,33 +31,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // HIGH-TRAFFIC TOOLS - All Priority 1.0
-  // These are the only tools we keep, optimized for maximum search volume
   const highTrafficTools = [
-    '/bmi-calculator',           // 100K+ monthly searches
-    '/age-calculator',           // 150K+ monthly searches  
-    '/percentage-calculator',    // 200K+ monthly searches
-    '/scientific-calculator',    // 100K+ monthly searches
-    '/basic-calculator',         // 80K+ monthly searches
-    '/word-counter',             // 80K+ monthly searches
-    '/password-generator',       // 90K+ monthly searches
-    '/qr-code-generator',        // 150K+ monthly searches
-    '/youtube-thumbnail-downloader', // 100K+ monthly searches
-    '/image-resizer',            // 60K+ monthly searches
-    '/unit-converter',           // 120K+ monthly searches (NEW - consolidated)
-    '/emi-calculator',           // 80K+ monthly searches
-    '/discount-calculator',      // 50K+ monthly searches
-    '/days-between-dates',       // 40K+ monthly searches
-    '/countdown-timer',          // 50K+ monthly searches
-    '/stopwatch',                // 40K+ monthly searches
-    '/world-clock',              // 50K+ monthly searches
+    '/bmi-calculator',
+    '/age-calculator',
+    '/percentage-calculator',
+    '/scientific-calculator',
+    '/basic-calculator',
+    '/word-counter',
+    '/password-generator',
+    '/qr-code-generator',
+    '/youtube-thumbnail-downloader',
+    '/image-resizer',
+    '/unit-converter',
+    '/emi-calculator',
+    '/discount-calculator',
+    '/days-between-dates',
+    '/countdown-timer',
+    '/stopwatch',
+    '/world-clock',
   ];
 
   const toolPages: MetadataRoute.Sitemap = highTrafficTools.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: currentDate,
     changeFrequency: 'weekly',
-    priority: 1.0,
+    priority: 0.9,
   }));
 
   return [...staticPages, ...toolPages];

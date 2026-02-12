@@ -1,4 +1,4 @@
-import { Calculator, Baby, Percent, FileText, Lock, QrCode, Image, Ruler, Wallet, Calendar, Timer, Globe } from 'lucide-react';
+import { Calculator, Baby, Percent, FileText, Lock, QrCode, Image, Ruler, Wallet, Calendar, Timer, Globe, MonitorPlay, Briefcase } from 'lucide-react';
 
 export const allTools = [
     {
@@ -144,5 +144,24 @@ export const allTools = [
         category: 'Math',
         badge: null,
         searches: '80K+/mo'
-    }
+    },
+    {
+        name: 'Video Player',
+        href: '/video-player',
+        description: 'Play videos in browser. 100% offline, private. No upload needed.',
+        icon: MonitorPlay,
+        category: 'Media',
+        badge: '🎬 NEW',
+        searches: '30K+/mo'
+    },
+    {
+        name: 'Freelancer Calculator',
+        href: '/freelancer-calculator',
+        description: 'Hourly rate, project pricing, time zones & income tracker.',
+        icon: Briefcase,
+        category: 'Finance',
+        badge: '💼 NEW',
+        searches: '25K+/mo'
+    },
 ];
+

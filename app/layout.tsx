@@ -54,6 +54,9 @@ export const metadata: Metadata = {
     'worksyhub'
   ],
   metadataBase: new URL('https://worksyhub.online'),
+  alternates: {
+    canonical: 'https://worksyhub.online',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -85,9 +88,6 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
-  },
-  verification: {
-    google: 'your-google-verification-code', // Add your Google Search Console verification
   },
 };
 

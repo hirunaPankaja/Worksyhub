@@ -363,8 +363,8 @@ export default function WordCounterPage() {
             <button
               onClick={() => setAutoSave(!autoSave)}
               className={`p-2 rounded-lg transition-colors ${autoSave
-                  ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                  : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+                ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
                 }`}
               title={autoSave ? 'Auto-save enabled' : 'Auto-save disabled'}
             >
@@ -373,8 +373,8 @@ export default function WordCounterPage() {
             <button
               onClick={() => setShowWhitespace(!showWhitespace)}
               className={`p-2 rounded-lg transition-colors ${showWhitespace
-                  ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
-                  : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+                ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
+                : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
                 }`}
               title={showWhitespace ? 'Hide whitespace' : 'Show whitespace'}
             >
@@ -437,8 +437,8 @@ export default function WordCounterPage() {
               <label
                 htmlFor="file-upload"
                 className={`px-4 py-2 rounded-lg transition-colors flex items-center gap-2 cursor-pointer ${isLoading
-                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                    : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
                   }`}
               >
                 {isLoading ? (
@@ -455,8 +455,9 @@ export default function WordCounterPage() {
             <textarea
               value={showWhitespace ? counterText.replace(/ /g, '·').replace(/\t/g, '→ ').replace(/\n/g, '↵\n') : counterText}
               onChange={(e) => setCounterText(showWhitespace ? e.target.value.replace(/·/g, ' ').replace(/→ /g, '\t').replace(/↵\n/g, '\n') : e.target.value)}
-              rows={12}
+              rows={16}
               className="w-full p-4 rounded-xl border-2 border-border bg-background text-foreground text-lg focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-mono resize-y"
+              style={{ minHeight: '320px' }}
               placeholder="Type or paste your text here... Or upload .txt, .md, or .rtf files. For PDF or Word documents, copy and paste the text content directly. All statistics update in real-time as you type."
               disabled={isLoading}
             />
@@ -569,8 +570,8 @@ export default function WordCounterPage() {
                 <div className="flex justify-between">
                   <span>Readability:</span>
                   <span className={`font-semibold ${textStats.readabilityScore >= 80 ? 'text-green-500' :
-                      textStats.readabilityScore >= 60 ? 'text-blue-500' :
-                        textStats.readabilityScore >= 40 ? 'text-orange-500' : 'text-red-500'
+                    textStats.readabilityScore >= 60 ? 'text-blue-500' :
+                      textStats.readabilityScore >= 40 ? 'text-orange-500' : 'text-red-500'
                     }`}>
                     {textStats.readabilityScore}/100
                   </span>

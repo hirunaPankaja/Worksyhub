@@ -17,12 +17,17 @@ export function Footer() {
       { name: 'Scientific', href: '/scientific-calculator' },
       { name: 'Percentage', href: '/percentage-calculator' },
       { name: 'EMI Calculator', href: '/emi-calculator' },
+      { name: 'Freelancer Calc', href: '/freelancer-calculator' },
     ],
     Tools: [
       { name: 'YouTube Thumbnail', href: '/youtube-thumbnail-downloader' },
       { name: 'QR Code Generator', href: '/qr-code-generator' },
       { name: 'Password Gen', href: '/password-generator' },
       { name: 'Word Counter', href: '/word-counter' },
+      { name: 'Video Player', href: '/video-player' },
+    ],
+    'Partner Sites': [
+      { name: 'LocalImage.online', href: 'https://localimage.online/' },
     ]
   };
 

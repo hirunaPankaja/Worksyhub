@@ -193,6 +193,46 @@ export default function YouTubeThumbnailDownloaderPage() {
                                 </div>
                             ))}
                         </div>
+
+                        {/* Watch & Download Video Section */}
+                        <div className="p-5 rounded-xl border-2 border-dashed border-red-200 dark:border-red-800/50 bg-red-50/50 dark:bg-red-900/10 space-y-4">
+                            <h3 className="text-lg font-semibold flex items-center gap-2 text-foreground">
+                                <Youtube className="h-5 w-5 text-red-500" />
+                                Video Options
+                            </h3>
+                            <div className="flex flex-wrap gap-3">
+                                <a
+                                    href={`https://www.youtube.com/watch?v=${videoId}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-5 py-2.5 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition-colors flex items-center gap-2"
+                                >
+                                    <Youtube className="h-4 w-4" />
+                                    Watch on YouTube
+                                </a>
+                                <a
+                                    href={`https://www.y2mate.com/youtube/${videoId}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors flex items-center gap-2"
+                                >
+                                    <Download className="h-4 w-4" />
+                                    Download Video (Y2Mate)
+                                </a>
+                                <a
+                                    href={`https://en.savefrom.net/1-youtube-video-downloader-${videoId}/`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors flex items-center gap-2"
+                                >
+                                    <Download className="h-4 w-4" />
+                                    Download Video (SaveFrom)
+                                </a>
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                                Video downloads are provided by third-party services. We are not affiliated with these services. Please respect YouTube&apos;s Terms of Service and copyright laws when downloading content.
+                            </p>
+                        </div>
                     </div>
                 )}
             </div>
