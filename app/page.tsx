@@ -238,12 +238,12 @@ export default function HomePage() {
           </p>
           <h3 className="text-xl font-bold text-foreground">Popular Free Tools:</h3>
           <ul>
-            <li><strong>BMI Calculator</strong> - Calculate your Body Mass Index and understand your health status</li>
-            <li><strong>Age Calculator</strong> - Find out exactly how old you are in years, months, and days</li>
-            <li><strong>Percentage Calculator</strong> - Calculate percentages, discounts, tips, and more</li>
-            <li><strong>Password Generator</strong> - Create strong, uncrackable passwords instantly</li>
-            <li><strong>QR Code Generator</strong> - Generate free QR codes for URLs, text, WiFi, and more</li>
-            <li><strong>Unit Converter</strong> - Convert length, weight, temperature, and other units</li>
+            <li><Link href="/bmi-calculator" className="font-bold hover:text-primary transition-colors">BMI Calculator</Link> - Calculate your Body Mass Index and understand your health status</li>
+            <li><Link href="/age-calculator" className="font-bold hover:text-primary transition-colors">Age Calculator</Link> - Find out exactly how old you are in years, months, and days</li>
+            <li><Link href="/percentage-calculator" className="font-bold hover:text-primary transition-colors">Percentage Calculator</Link> - Calculate percentages, discounts, tips, and more</li>
+            <li><Link href="/password-generator" className="font-bold hover:text-primary transition-colors">Password Generator</Link> - Create strong, uncrackable passwords instantly</li>
+            <li><Link href="/qr-code-generator" className="font-bold hover:text-primary transition-colors">QR Code Generator</Link> - Generate free QR codes for URLs, text, WiFi, and more</li>
+            <li><Link href="/unit-converter" className="font-bold hover:text-primary transition-colors">Unit Converter</Link> - Convert length, weight, temperature, and other units</li>
           </ul>
           <p>
             All tools are mobile-friendly, work on any device, and deliver results in milliseconds. Start using our free calculators today – no download required!

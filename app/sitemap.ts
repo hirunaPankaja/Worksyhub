@@ -49,6 +49,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/countdown-timer',
     '/stopwatch',
     '/world-clock',
+    '/favorites',
+    '/freelancer-calculator',
+    '/video-player',
   ];
 
   const toolPages: MetadataRoute.Sitemap = highTrafficTools.map((route) => ({
